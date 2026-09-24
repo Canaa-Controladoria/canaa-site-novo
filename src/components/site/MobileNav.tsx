@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { mainNav, solutions, site } from "@/lib/site";
 
 export function MobileNav() {
@@ -29,14 +30,14 @@ export function MobileNav() {
         <div className="fixed inset-0 z-40 flex flex-col bg-base-100 pt-24 px-6 overflow-y-auto">
           <nav className="flex flex-col gap-1">
             {mainNav.map((item) => (
-              <Link
+              <NavLink
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className="border-b border-base-300 py-3 font-display text-xl text-navy-800"
               >
                 {item.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
           <div className="mt-6">

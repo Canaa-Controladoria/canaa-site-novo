@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
+import { NavLink } from "./NavLink";
 import { site, mainNav } from "@/lib/site";
 
 const quickLinks = [
@@ -31,9 +32,7 @@ export function Footer() {
 
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <span className="font-display text-2xl text-white">
-            Cana<span className="text-amber-400">ã</span>
-          </span>
+          <span className="font-display text-2xl text-white">Canaã</span>
           <p className="mt-3 text-sm">
             Controladoria outsourcing, há mais de uma década atuando no mercado com metodologia orientada a
             resultados.
@@ -65,9 +64,9 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             {quickLinks.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="hover:text-white">
+                <NavLink href={l.href} className="hover:text-white">
                   {l.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -100,6 +99,29 @@ export function Footer() {
               </Link>
             ))}
           </nav>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-6 pb-8">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="font-mono text-xs uppercase tracking-widest text-white/60">Como chegar</p>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.name)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-blue-mist-light hover:text-white"
+          >
+            Abrir no Google Maps →
+          </a>
+        </div>
+        <div className="overflow-hidden rounded-box border border-white/10">
+          <iframe
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(site.name)}&t=m&z=16&output=embed&iwloc=near`}
+            className="h-44 w-full md:h-56"
+            loading="lazy"
+            title={`Mapa de localização — ${site.name}`}
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </div>
 

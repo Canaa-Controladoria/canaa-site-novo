@@ -1,8 +1,8 @@
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <Link href="/" className="group inline-flex flex-col leading-none" aria-label="Canaã Controladoria — início">
+    <NavLink href="/" className="group inline-flex flex-col leading-none" aria-label="Canaã Controladoria — início">
       <span
         className={`font-display text-[1.7rem] tracking-tight ${dark ? "text-white" : "text-navy-700"}`}
       >
@@ -15,6 +15,6 @@ export function Logo({ dark = false }: { dark?: boolean }) {
       >
         Controladoria para resultados
       </span>
-    </Link>
+    </NavLink>
   );
 }

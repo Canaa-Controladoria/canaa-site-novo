@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 import { CTAButton } from "./CTAButton";
+import { NavLink } from "./NavLink";
 import { mainNav, solutions, site } from "@/lib/site";
 
 export function Header() {
@@ -23,14 +24,14 @@ export function Header() {
           {mainNav.map((item) =>
             item.label === "Soluções" ? (
               <div key={item.href} className="dropdown dropdown-hover">
-                <Link
+                <NavLink
                   href={item.href}
                   tabIndex={0}
                   className="text-sm font-medium text-navy-800 hover:text-accent transition-colors"
                 >
                   Soluções
-                </Link>
-                <ul className="dropdown-content menu z-40 mt-3 w-72 rounded-box bg-base-100 p-2 shadow-lg border border-base-300">
+                </NavLink>
+                <ul className="dropdown-content menu z-40 w-72 rounded-box bg-base-100 p-2 shadow-lg border border-base-300">
                   {solutions.map((s) => (
                     <li key={s.slug}>
                       <Link href={`/solucoes/${s.slug}`} className="flex flex-col items-start py-2">
@@ -42,13 +43,13 @@ export function Header() {
                 </ul>
               </div>
             ) : (
-              <Link
+              <NavLink
                 key={item.href}
                 href={item.href}
                 className="text-sm font-medium text-navy-800 hover:text-accent transition-colors"
               >
                 {item.label}
-              </Link>
+              </NavLink>
             )
           )}
         </nav>
