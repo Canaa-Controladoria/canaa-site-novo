@@ -7,6 +7,7 @@ const quickLinks = [
   { label: "Início", href: "/" },
   { label: "Sobre nós", href: "/quem-somos" },
   { label: "Soluções", href: "/solucoes" },
+  { label: "Método", href: "/metodo" },
   { label: "Conteúdos", href: "/blog" },
   { label: "Contato", href: "/contato" },
   { label: "Trabalhe conosco", href: "/trabalhe-conosco" },
@@ -14,7 +15,7 @@ const quickLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-navy-900 text-blue-mist-light">
+    <footer className="bg-navy-950 text-blue-mist-light">
       <div className="mx-auto max-w-6xl px-6 py-6">
         <div className="ledger-rule ledger-rule--dark mb-6" />
         <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
@@ -99,29 +100,6 @@ export function Footer() {
               </Link>
             ))}
           </nav>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-6xl px-6 pb-8">
-        <div className="mb-3 flex items-center justify-between">
-          <p className="font-mono text-xs uppercase tracking-widest text-white/60">Como chegar</p>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.name)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-mist-light hover:text-white"
-          >
-            Abrir no Google Maps →
-          </a>
-        </div>
-        <div className="overflow-hidden rounded-box border border-white/10">
-          <iframe
-            src={`https://maps.google.com/maps?q=${encodeURIComponent(site.name)}&t=m&z=16&output=embed&iwloc=near`}
-            className="h-44 w-full md:h-56"
-            loading="lazy"
-            title={`Mapa de localização — ${site.name}`}
-            referrerPolicy="no-referrer-when-downgrade"
-          />
         </div>
       </div>
 

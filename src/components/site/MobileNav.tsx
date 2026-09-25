@@ -18,11 +18,11 @@ export function MobileNav() {
         className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5"
       >
         <span
-          className={`block h-0.5 w-6 bg-navy-800 transition-transform ${open ? "translate-y-2 rotate-45" : ""}`}
+          className={`block h-0.5 w-6 transition-transform ${open ? "translate-y-2 rotate-45 bg-navy-800" : "bg-white"}`}
         />
-        <span className={`block h-0.5 w-6 bg-navy-800 transition-opacity ${open ? "opacity-0" : ""}`} />
+        <span className={`block h-0.5 w-6 transition-opacity ${open ? "opacity-0" : "bg-white"}`} />
         <span
-          className={`block h-0.5 w-6 bg-navy-800 transition-transform ${open ? "-translate-y-2 -rotate-45" : ""}`}
+          className={`block h-0.5 w-6 transition-transform ${open ? "-translate-y-2 -rotate-45 bg-navy-800" : "bg-white"}`}
         />
       </button>
 
@@ -58,7 +58,7 @@ export function MobileNav() {
           <Link
             href="/lp-controller-cfo"
             onClick={() => setOpen(false)}
-            className="mt-8 mb-10 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-wide text-accent-content"
+            className="mt-8 mb-10 inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 text-sm font-bold text-accent-content shadow-md shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg"
           >
             Solicitar proposta
           </Link>

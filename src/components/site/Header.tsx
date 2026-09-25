@@ -1,35 +1,28 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
-import { CTAButton } from "./CTAButton";
 import { NavLink } from "./NavLink";
-import { mainNav, solutions, site } from "@/lib/site";
+import { mainNav, solutions } from "@/lib/site";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-30 bg-base-100/95 backdrop-blur border-b border-base-300">
-      <div className="hidden md:block bg-navy-900 text-blue-mist-light">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-1.5 text-xs">
-          <span className="font-sans">{site.addressShort}</span>
-          <a href={`tel:+55${site.phoneWhatsapp.slice(2)}`} className="font-mono tabular-nums hover:text-white">
-            {site.phoneDisplay}
-          </a>
-        </div>
-      </div>
+    <header className="sticky top-0 z-30 bg-navy-900 border-b border-white/10">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Logo dark />
 
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-        <Logo />
-
-        <nav className="hidden md:flex items-center gap-7">
+        <nav className="hidden md:flex items-center gap-8">
           {mainNav.map((item) =>
             item.label === "Soluções" ? (
               <div key={item.href} className="dropdown dropdown-hover">
                 <NavLink
                   href={item.href}
                   tabIndex={0}
-                  className="text-sm font-medium text-navy-800 hover:text-accent transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-mist-light hover:text-white transition-colors"
                 >
                   Soluções
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
                 </NavLink>
                 <ul className="dropdown-content menu z-40 w-72 rounded-box bg-base-100 p-2 shadow-lg border border-base-300">
                   {solutions.map((s) => (
@@ -46,7 +39,7 @@ export function Header() {
               <NavLink
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-navy-800 hover:text-accent transition-colors"
+                className="text-sm font-medium text-blue-mist-light hover:text-white transition-colors"
               >
                 {item.label}
               </NavLink>
@@ -55,9 +48,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <CTAButton href="/lp-controller-cfo" className="hidden md:inline-flex">
+          <Link
+            href="/lp-controller-cfo"
+            className="hidden md:inline-flex items-center rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-accent-content shadow-md shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg hover:shadow-accent/30 md:ml-4"
+          >
             Solicitar proposta
-          </CTAButton>
+          </Link>
           <MobileNav />
         </div>
       </div>

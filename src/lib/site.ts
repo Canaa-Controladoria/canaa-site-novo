@@ -9,7 +9,7 @@ export const site = {
   addressShort: "Av. Luiz Eduardo de Toledo Prado, 900, sl 108. Ribeirão Preto - SP",
   hours: "Segunda à sexta, das 8h às 12h e das 14h às 18h",
   social: {
-    linkedin: "https://www.linkedin.com/company/canaacontroladoria",
+    linkedin: "https://br.linkedin.com/company/cana%C3%A3-controladoria-e-finan%C3%A7as",
     instagram: "https://www.instagram.com/canaacontroladoria",
   },
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
@@ -24,7 +24,8 @@ export const mainNav = [
   { label: "Início", href: "/" },
   { label: "Quem somos", href: "/quem-somos" },
   { label: "Soluções", href: "/solucoes" },
-  { label: "Blog", href: "/blog" },
+  { label: "Método", href: "/metodo" },
+  { label: "Insights", href: "/blog" },
   { label: "Trabalhe conosco", href: "/trabalhe-conosco" },
   { label: "Contato", href: "/contato" },
 ];
