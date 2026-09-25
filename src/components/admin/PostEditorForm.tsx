@@ -165,7 +165,7 @@ export function PostEditorForm({ categories, initial }: { categories: EditorCate
             <button
               onClick={() => save("published")}
               disabled={saving !== null}
-              className="btn w-full border-none bg-accent text-accent-content hover:bg-ember-700 disabled:opacity-60"
+              className="btn w-full border-none bg-accent text-accent-content hover:bg-accent-700 disabled:opacity-60"
             >
               {saving === "published" ? "Publicando…" : "Publicar"}
             </button>

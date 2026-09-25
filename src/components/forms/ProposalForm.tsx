@@ -97,7 +97,7 @@ export function ProposalForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="btn w-full border-none bg-accent text-accent-content hover:bg-ember-700 disabled:opacity-60"
+        className="btn w-full border-none bg-accent text-accent-content hover:bg-accent-700 disabled:opacity-60"
       >
         {status === "loading" ? "Enviando…" : "Solicitar proposta"}
       </button>

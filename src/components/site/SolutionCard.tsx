@@ -20,7 +20,7 @@ export function SolutionCard({
       </span>
       <h3 className="mt-5 font-mono text-sm font-semibold uppercase tracking-wide text-navy-800">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-navy-600">{description}</p>
-      <span className="mt-4 text-xs font-semibold uppercase tracking-wide text-ember-600 group-hover:underline">
+      <span className="mt-4 text-xs font-semibold uppercase tracking-wide text-navy-800 group-hover:underline">
         Saiba mais →
       </span>
     </Link>

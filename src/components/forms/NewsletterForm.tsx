@@ -40,7 +40,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={state === "loading"}
-        className="btn border-none bg-accent text-accent-content hover:bg-ember-700 disabled:opacity-60"
+        className="btn border-none bg-accent text-accent-content hover:bg-accent-700 disabled:opacity-60"
       >
         {state === "loading" ? "Enviando…" : "Inscrever"}
       </button>

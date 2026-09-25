@@ -37,7 +37,7 @@ export default function DiagnosticoFinanceiroPage() {
           href={diagnosisLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-ember-700"
+          className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-accent-700"
         >
           Fazer diagnóstico agora
         </a>
@@ -77,7 +77,7 @@ export default function DiagnosticoFinanceiroPage() {
                 </li>
               ))}
             </ul>
-            <a href={diagnosisLink} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-ember-700">
+            <a href={diagnosisLink} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-accent-700">
               Solicitar diagnóstico financeiro
             </a>
           </div>
@@ -108,7 +108,7 @@ export default function DiagnosticoFinanceiroPage() {
           title="Sua empresa merece crescer com segurança"
           lede="Agende seu diagnóstico financeiro hoje mesmo. Não perca a chance de transformar seus números em decisões inteligentes."
         />
-        <a href={diagnosisLink} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-ember-700">
+        <a href={diagnosisLink} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center justify-center rounded-full bg-accent px-8 py-4 text-sm font-semibold uppercase tracking-wide text-accent-content hover:bg-accent-700">
           Garanta seu diagnóstico financeiro agora
         </a>
       </section>

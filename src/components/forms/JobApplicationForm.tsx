@@ -77,7 +77,7 @@ export function JobApplicationForm() {
 
       {status === "error" && <p className="text-sm text-error">{error}</p>}
 
-      <button type="submit" disabled={status === "loading"} className="btn w-full border-none bg-accent text-accent-content hover:bg-ember-700 disabled:opacity-60">
+      <button type="submit" disabled={status === "loading"} className="btn w-full border-none bg-accent text-accent-content hover:bg-accent-700 disabled:opacity-60">
         {status === "loading" ? "Enviando…" : "Enviar candidatura"}
       </button>
     </form>

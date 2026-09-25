@@ -19,7 +19,7 @@ export default function AdminPostsPage() {
           <h1 className="font-display text-2xl text-navy-800">Posts do blog</h1>
           <p className="text-sm text-navy-500">{posts.length} posts no total</p>
         </div>
-        <Link href="/admin/posts/new" className="btn border-none bg-accent text-accent-content hover:bg-ember-700">
+        <Link href="/admin/posts/new" className="btn border-none bg-accent text-accent-content hover:bg-accent-700">
           + Novo post
         </Link>
       </div>
