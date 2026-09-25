@@ -1,27 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const testimonials = [
-  {
-    quote:
-      "No final de 2022 conhecemos a Canaã e a parceria gerou tantos frutos que estamos completando 3 anos produzindo cada vez mais informações fidedignas da nossa operação. Isso nos possibilita tomar decisões mais assertivas e antever dificuldades que anteriormente nos pegavam desprevenidos.",
-    author: "Diretor Financeiro",
-    company: "Grupo Rib Silk",
-  },
-  {
-    quote:
-      "Temos hoje mais controle administrativo, o que torna mais fácil delegar e cobrar resultados. Quando precisamos de mais atenção em algum setor, eles prontamente estruturam um plano de ação.",
-    author: "Presidente",
-    company: "Ipê Golf Club",
-  },
-  {
-    quote:
-      "Optamos pela terceirização da controladoria que tem mais profissionais com uma visão e conhecimento mais amplos. O que mais nos ajudou foi segurança nas informações para a tomada de decisão.",
-    author: "Diretoria",
-    company: "Happening Logística",
-  },
-];
+import { testimonials } from "@/lib/testimonials";
 
 export function Testimonials() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,7 +44,8 @@ export function Testimonials() {
               “{t.quote}”
             </blockquote>
             <figcaption className="mt-6 font-mono text-xs uppercase tracking-wide text-navy-500">
-              {t.author} · {t.company}
+              {t.author} · {t.role ? `${t.role} · ` : ""}
+              {t.company}
             </figcaption>
           </figure>
         </div>
