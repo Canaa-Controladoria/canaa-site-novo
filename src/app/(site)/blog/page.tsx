@@ -7,8 +7,8 @@ import { listPublishedPosts, searchPosts } from "@/lib/blog";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Visite o Blog da Canaã Controladoria! Mergulhe na teoria e prática com nossos conteúdos especializados para sua empresa.",
+  title: "Insights",
+  description: "Visite os Insights da Canaã Controladoria! Mergulhe na teoria e prática com nossos conteúdos especializados para sua empresa.",
 };
 
 export default async function BlogPage({
@@ -21,13 +21,21 @@ export default async function BlogPage({
 
   return (
     <>
-      <section className="border-b border-base-300 bg-base-200">
-        <div className="mx-auto max-w-6xl px-6 py-14 text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember-600 mb-3">Blog</p>
-          <h1 className="font-display text-4xl leading-tight text-navy-800">
-            Controladoria e Inteligência Financeira
-          </h1>
-          <p className="mt-4 text-lg text-navy-600">Mergulhe na teoria e prática com nossos conteúdos especializados.</p>
+      <section className="relative overflow-hidden bg-navy-900 text-white">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-6 py-14 text-center">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-blue-mist mb-3">Insights</p>
+          <h1 className="font-display text-4xl leading-tight">Controladoria e Inteligência Financeira</h1>
+          <p className="mt-4 text-lg text-blue-mist-light">
+            Mergulhe na teoria e prática com nossos conteúdos especializados.
+          </p>
 
           <form action="/blog" method="get" className="mx-auto mt-8 flex max-w-md gap-2">
             <input
@@ -35,9 +43,9 @@ export default async function BlogPage({
               name="q"
               defaultValue={q}
               placeholder="Buscar por palavra-chave…"
-              className="input input-bordered w-full bg-base-100"
+              className="input input-bordered w-full border-white/20 bg-white/10 text-white placeholder:text-blue-mist focus:border-white/40"
             />
-            <button type="submit" className="btn bg-navy-800 text-white hover:bg-navy-700 border-none">
+            <button type="submit" className="btn border-none bg-accent text-accent-content hover:bg-accent-700">
               Buscar
             </button>
           </form>
