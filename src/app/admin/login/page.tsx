@@ -31,9 +31,7 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-navy-900 px-6">
       <div className="w-full max-w-sm rounded-box bg-base-100 p-8">
-        <span className="font-display text-2xl text-navy-800">
-          Cana<span className="text-ember-600">ã</span>
-        </span>
+        <span className="font-display text-2xl text-navy-800">Canaã</span>
         <p className="mt-1 text-sm text-navy-500">Painel do blog</p>
 
         <form onSubmit={onSubmit} className="mt-8 space-y-4">
