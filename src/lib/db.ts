@@ -71,6 +71,17 @@ function migrate(db: Database.Database) {
     CREATE INDEX IF NOT EXISTS idx_post_views_post_id ON post_views(post_id);
     CREATE INDEX IF NOT EXISTS idx_post_views_viewed_at ON post_views(viewed_at);
 
+    CREATE TABLE IF NOT EXISTS shorts (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      video_path TEXT NOT NULL,
+      thumbnail_path TEXT,
+      status TEXT NOT NULL DEFAULT 'draft', -- draft | published
+      position INTEGER NOT NULL DEFAULT 0,
+      published_at TEXT,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
     CREATE TABLE IF NOT EXISTS admin_users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT NOT NULL UNIQUE,

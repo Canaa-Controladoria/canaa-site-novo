@@ -5,9 +5,11 @@ import { useRef, useState } from "react";
 export function ImageUploadField({
   value,
   onChange,
+  folder = "posts",
 }: {
   value: string | null;
   onChange: (url: string | null) => void;
+  folder?: "posts" | "shorts";
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -18,6 +20,7 @@ export function ImageUploadField({
     setUploading(true);
     const form = new FormData();
     form.append("file", file);
+    form.append("folder", folder);
     const res = await fetch("/api/admin/upload", { method: "POST", body: form });
     setUploading(false);
     const data = await res.json();
