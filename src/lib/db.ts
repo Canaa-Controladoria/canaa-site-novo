@@ -2,10 +2,25 @@ import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+// Na Vercel o filesystem do deploy é somente-leitura (exceto /tmp), então o
+// banco é copiado de um snapshot versionado para /tmp em cada cold start.
+// Escritas funcionam durante a vida da instância, mas não persistem entre
+// deploys/instâncias — ok para demonstração, não para uso em produção.
+const DB_PATH = process.env.VERCEL
+  ? seedTmpDb()
+  : path.join(process.cwd(), "data", "canaa.db");
 
-const DB_PATH = path.join(DATA_DIR, "canaa.db");
+function seedTmpDb() {
+  const tmpPath = path.join("/tmp", "canaa.db");
+  if (!fs.existsSync(tmpPath)) {
+    const seedPath = path.join(process.cwd(), "data", "seed.db");
+    fs.copyFileSync(seedPath, tmpPath);
+  }
+  return tmpPath;
+}
+
+const DATA_DIR = path.dirname(DB_PATH);
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
 declare global {
   var __canaaDb: Database.Database | undefined;
