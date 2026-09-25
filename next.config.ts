@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "canaacontroladoria.com.br",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
     ],
   },
 };
