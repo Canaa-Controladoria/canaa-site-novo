@@ -3,6 +3,20 @@
 Reconstrução do site institucional + blog da Canaã Controladoria, migrado do WordPress para
 Next.js. Ver `escopo-projeto.md` (em `C:\escopo`) para o escopo original combinado.
 
+## O que o app faz
+
+É o site público da Canaã Controladoria (páginas institucionais, soluções, formulários de
+contato/proposta) mais um blog com painel de administração:
+
+- Qualquer visitante lê os posts publicados, navega por categoria, busca por texto e vê os mais
+  lidos do mês.
+- O cliente (dono do site) tem um login de administrador em `/admin`. Nesse painel ele cria,
+  edita, apaga ou oculta posts (voltando o status para rascunho tira o post do ar na hora),
+  organiza por categoria/tags e escreve os campos de SEO — tudo sem precisar mexer em código ou
+  fazer novo deploy.
+- Formulários do site (proposta, contato, trabalhe conosco, newsletter) gravam o lead no banco e,
+  se o SMTP estiver configurado, também disparam um e-mail de aviso.
+
 ## Stack
 
 - **Next.js 16** (App Router) + TypeScript
@@ -66,6 +80,56 @@ cuidado depois que o site estiver em produção.
 - `src/lib/blog.ts` — leitura pública do blog (só posts publicados)
 - `src/lib/admin-blog.ts` — CRUD completo usado pelo painel
 - `src/lib/solutions-content.ts` — conteúdo das 8 páginas de soluções
+
+## Entidades
+
+Tudo abaixo vive em `data/canaa.db` (SQLite, schema em `src/lib/db.ts`). Campos marcados
+**(derivado)** não existem como coluna — são calculados em tempo de leitura ou de escrita.
+
+### Post (`posts`)
+
+| Campo | Origem |
+|---|---|
+| `id`, `title`, `slug` | armazenado |
+| `primary_category_slug` | armazenado — categoria dona da URL (`/categoria/slug`) |
+| `status` | armazenado — `draft` ou `published`. Só `published` aparece no site público |
+| `published_at` | armazenado — nulo enquanto `status = draft` |
+| `updated_at` | armazenado — atualizado a cada save |
+| `seo_title`, `seo_description`, `focus_keyword`, `excerpt` | armazenado |
+| `content_html` | armazenado — HTML gerado pelo editor rich text |
+| `featured_image` | armazenado — caminho em `public/uploads/posts/...` |
+| `reading_time_minutes` | **(derivado)** calculado a partir da contagem de palavras do `content_html` a cada save (`admin-blog.ts`) |
+| `path` | **(derivado)** `/${primary_category_slug}/${slug}`, montado na leitura |
+| `categories`, `tags` | **(derivado)** join com `post_categories`/`post_tags` na leitura |
+| `toc` | **(derivado)** extraído dos `<h2>`/`<h3>` do `content_html` na leitura, não é salvo |
+
+### Category (`categories`) / Tag (`tags`)
+
+`id`, `name`, `slug` — armazenados. Tag é criada automaticamente (upsert) quando usada num post
+pela primeira vez; não existe tela própria de gestão de tags/categorias.
+
+### PostView (`post_views`)
+
+`id`, `post_id`, `viewed_at` — um registro por visualização de post publicado (armazenado via
+`recordPostView`). O ranking "mais lidos do mês" é **(derivado)**: conta linhas dos últimos N dias
+agrupadas por post; sem nenhuma view no período, cai para os posts mais recentes.
+
+### AdminUser (`admin_users`)
+
+`id`, `email`, `name` — armazenado. `password_hash` — armazenado como hash bcrypt, nunca a senha
+em texto puro. Não há tela de autoatendimento para trocar a senha; troca-se rodando o seed de novo
+com `ADMIN_PASSWORD` atualizado no `.env.local`.
+
+### Lead (`leads`)
+
+`id`, `source` (identifica qual formulário enviou, ex. "proposta"), `name`, `company`, `whatsapp`,
+`email`, `lgpd_consent`, `created_at` — armazenados como enviados pelo formulário
+(`src/app/api/leads/route.ts`). A coluna `message` existe no schema mas nenhum formulário atual a
+preenche (fica sempre `NULL`) — reservada para um futuro campo de mensagem livre.
+
+### NewsletterSubscriber (`newsletter_subscribers`)
+
+`id`, `email`, `created_at` — armazenado.
 
 ## Pendências conhecidas / próximos passos sugeridos
 
