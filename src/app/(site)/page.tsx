@@ -80,15 +80,8 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-900 text-white">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
+      <section className="hero relative overflow-hidden bg-navy-925 text-white">
+        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-20 sm:pt-20 sm:pb-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="fade-rise">
             <h1 className="font-display text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
