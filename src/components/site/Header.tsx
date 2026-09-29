@@ -7,7 +7,7 @@ import { mainNav, solutions } from "@/lib/site";
 export function Header() {
   return (
     <header className="sticky top-0 z-30 bg-navy-900 border-b border-white/10">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:mx-0 md:w-full md:max-w-none md:px-8 lg:px-12">
         <Logo dark />
 
         <nav className="hidden md:flex items-center gap-6 whitespace-nowrap lg:gap-8">
