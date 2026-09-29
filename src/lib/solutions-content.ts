@@ -31,7 +31,6 @@ export const solutionsContent: Record<string, SolutionContent> = {
     heroTitle: "BI Canaã — seu BI financeiro para decisões mais inteligentes",
     heroLede:
       "O BI financeiro Canaã reúne os principais dados da sua empresa em um painel personalizado e intuitivo. Visualize indicadores, acompanhe resultados e tome decisões com base em informações reais, usando seu ERP e ferramentas de tecnologia — podendo acoplar Inteligência Artificial.",
-    heroImage: "https://canaacontroladoria.com.br/wp-content/uploads/2024/08/power-bi-mobile-apps-all-up.png",
     highlights: [
       {
         title: "Foco no que importa",
