@@ -74,14 +74,53 @@ naming/grouping/docs.
 ## Styling / fonts
 
 Tailwind v4 (CSS-first, `@import "tailwindcss"` + `@plugin "daisyui"`) in
-`src/app/globals.css`, no separate build step of its own. Fonts (Fraunces,
-IBM Plex Sans, IBM Plex Mono) are loaded via `next/font/google` and
-self-hosted by Next at build time. `cssEntry` is pointed at the compiled CSS
-chunk produced by running the repo's own `next build` (`npm run build`),
-which is also where the self-hosted font files come from — see
-`buildCmd` in config.json.
+`src/app/globals.css`, no separate build step of its own. `cssEntry` is
+pointed at the compiled CSS chunk produced by running the repo's own
+`next build` (`npm run build`).
 
-## Setup required before re-syncing (not committed — repo is not a git repo)
+**2026-09-29 re-sync: font/palette overhaul (commit `552852b`, "adopt
+client color palette and Open Sans typography").** Two things changed that
+required config + `conventions.md` fixes:
+
+- **Font stack collapsed to a single family, Open Sans** (previously
+  Fraunces + IBM Plex Sans + IBM Plex Mono, three distinct faces). All of
+  `--font-display`/`--font-mono`/`--font-sans` now alias `--font-open-sans`
+  — `font-display`/`font-mono` classes still exist but no longer produce a
+  visually distinct face, only weight/size/tracking differ now.
+- **`next build` now emits fonts in a SEPARATE CSS chunk from the main
+  Tailwind/daisyUI chunk** (previously both were in one chunk `cssEntry`
+  alone could cover). `cssEntry` only covers the Tailwind/tokens chunk now
+  (identify by: no `@font-face` rules, has `--tw-*` custom properties, ~4x
+  larger of the two `.next/static/chunks/*.css` files); the font-face
+  chunk (has `@font-face` rules, one `font-family`) must be wired via
+  `cfg.extraFonts`, or `[FONT_MISSING]` fires. **Re-verify this file
+  pairing on every re-sync** — chunk hashes AND which-chunk-has-what can
+  both change between builds; don't assume last sync's file/role mapping
+  still holds.
+- **Color palette reshuffled**, not just renamed: `accent` moved from
+  orange (`#cb5f08`) to red (`#c33628`, same value as `error` — apparently
+  intentional, both are brand-red now); the `navy-700`/`navy-800`/`navy-900`
+  utilities collapsed to a single flat blue `#004b84` (same as `primary`/
+  `neutral`); the actual darkest navy is now `navy-950` (`#252d48`), a role
+  `navy-900` used to hold. `conventions.md`'s color table was rewritten
+  against the fresh `_ds_bundle.css` (grep `--color-*:#` in it to re-verify
+  next time) — if this reshuffles again, recheck every hex in that table,
+  not just the ones that look wrong.
+- **The anchor's diff does NOT track stale fonts.** `.sync-diff.json`'s
+  `upload.deletePaths` is component-scoped (regrouped/removed components
+  only) — it reported `[]` even though this rebuild dropped 27 old
+  Fraunces/IBM Plex `.woff2` files that the previous sync had uploaded.
+  **On every re-sync, manually diff `list_files`'s `fonts/*.woff2` against
+  the fresh `ds-bundle/fonts/*.woff2`** and delete anything remote-only
+  (a small follow-up `finalize_plan` with `deletes: ["fonts/**"]` is
+  enough — no need to touch `writes`). Same risk likely applies to
+  `tokens/**` and `guidelines/**` if this repo ever populates those.
+- **daisyUI dropped the `-bordered` modifier** (`input-bordered`,
+  `file-input-bordered` no longer exist as classes — `.input`/`.file-input`
+  are bordered by default now in whatever daisyUI version this pulled).
+  Fixed in `conventions.md`.
+
+## Setup required before re-syncing
 
 1. **`node_modules/canaa` must be a self-referencing junction to the repo
    root**, so `--node-modules ./node_modules` (needed for real deps: react,
@@ -96,11 +135,13 @@ which is also where the self-hosted font files come from — see
    itself, easy to get backwards).
 2. **`npm run build` must be run fresh** before each sync (`buildCmd` in
    config.json) to produce the compiled CSS/fonts `cssEntry` points at.
-3. **`cssEntry` is a content-hashed filename** (`.next/static/chunks/<hash>.css`)
-   that **changes on every `next build`** — after step 2, re-check
-   `.next/static/chunks/*.css` (there's exactly one production CSS chunk)
-   and update `cfg.cssEntry` in config.json if the hash changed, before
-   running the converter.
+3. **`cssEntry` (and now `extraFonts`) are content-hashed filenames**
+   (`.next/static/chunks/<hash>.css`) that **change on every `next
+   build`** — after step 2, re-check `.next/static/chunks/*.css` (as of
+   2026-09-29 there are **two** production CSS chunks, not one — see
+   "Styling / fonts" above for how to tell them apart) and update both
+   `cfg.cssEntry` and `cfg.extraFonts` in config.json if the hashes
+   changed, before running the converter.
 4. **`.ds-sync/` (staged converter scripts + its own `node_modules`) is
    gitignored and not durable** — re-stage from the skill's base dir
    (`cp -r <skill-base-dir>/{package-build.mjs,package-validate.mjs,package-capture.mjs,resync.mjs,lib,storybook} .ds-sync/`)
@@ -123,12 +164,17 @@ which is also where the self-hosted font files come from — see
 - No Storybook, no `.d.ts` exports, no reference render — `.d.ts` prop
   contracts come from synth-entry scanning of `src/`, which is weaker than a
   real published build's type declarations.
-- This repo has no `.git` — nothing from this sync (config, NOTES.md,
-  conventions.md, previews/, entry-src/) is committed anywhere. If the
-  working directory is lost/reset, the entire setup (including the
-  `node_modules/canaa` junction and scope decisions above) must be redone
-  from this file. Consider committing `.design-sync/` (minus the gitignored
-  paths already listed in `.gitignore`) once this repo has version control.
+- The repo now has `.git` (it didn't when this file was first written) —
+  the durable set (`config.json`, `NOTES.md`, `conventions.md`, `previews/`,
+  `entry-src/`) is committed as of the 2026-09-22 initial sync. The
+  `node_modules/canaa` self-link and `.ds-sync/` staged scripts are
+  gitignored machine state and still need recreating per the setup steps
+  above on a fresh clone.
+- The design system's font stack and color palette are apparently still
+  actively evolving (see "Styling / fonts" above) — expect `conventions.md`
+  drift on the next few re-syncs too; always re-verify its hex/class claims
+  against the fresh `_ds_bundle.css` rather than assuming last sync's table
+  still holds.
 - Only 8 of 25 app components are synced; if the user wants more later
   (e.g. WhatsAppButton once a `define` hook exists, or any router-dependent
   component once/if a Next router shim becomes available), re-derive scope
