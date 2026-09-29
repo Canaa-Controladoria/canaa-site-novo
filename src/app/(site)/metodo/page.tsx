@@ -472,7 +472,7 @@ export default function MetodoPage() {
             Pronto para colocar o método <strong className="font-extrabold">para rodar na sua empresa</strong>?
           </h2>
           <Link
-            href="/lp-controller-cfo"
+            href="/solucoes/controller-terceirizado#diagnostico"
             className="inline-flex shrink-0 items-center rounded-lg bg-accent px-8 py-3.5 text-base font-bold text-accent-content shadow-md shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg hover:shadow-accent/30"
           >
             Agendar diagnóstico

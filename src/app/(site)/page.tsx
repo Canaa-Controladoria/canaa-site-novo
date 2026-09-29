@@ -25,6 +25,7 @@ const solutionCopy: Record<string, string> = {
   valuation: "Metodologias consagradas — DCF e múltiplos — para saber quanto vale o seu negócio.",
   "estrutura-de-controladoria": "Formação de equipe, diagnóstico e implantação do setor de FP&A.",
   training: "Capacitação de gestores e equipes com foco em performance financeira.",
+  "consultoria-financeira": "Caixa, orçamento e decisões com dados, com uma rotina contínua de controladoria.",
 };
 
 const pillars = [
@@ -92,7 +93,7 @@ export default async function HomePage() {
           <div className="fade-rise">
             <div className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-wide">
               <span className="h-1.5 w-1.5 rounded-full bg-ember-600" />
-              Controladoria · Finanças · Contabilidade · Operação
+              Canaã Controladoria para Resultados · Finanças · Contabilidade · Operação
             </div>
             <h1 className="font-display mt-7 text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
               Controladoria que dá <strong className="font-extrabold">clareza</strong>, autoridade que gera{" "}
@@ -103,9 +104,9 @@ export default async function HomePage() {
               gestão orientada por dados — não por achismo.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <CTAButton href="/lp-controller-cfo">Solicitar proposta</CTAButton>
-              <CTAButton href="/solucoes" variant="ghost-light">
-                Conhecer soluções →
+              <CTAButton href="/solucoes/controller-terceirizado#diagnostico">Agendar diagnóstico</CTAButton>
+              <CTAButton href="#metodo" variant="ghost-light">
+                Conhecer o método 3 Pilares
               </CTAButton>
             </div>
             <div className="mt-11 flex flex-wrap gap-10 border-t border-white/15 pt-7">
@@ -275,7 +276,7 @@ export default async function HomePage() {
               diagnóstico, estrutura, relatórios e reuniões de resultado com a diretoria.
             </p>
             <Link
-              href="/lp-controller-cfo"
+              href="/solucoes/controller-terceirizado"
               className="group inline-flex w-fit items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-navy-900 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-mist-light hover:shadow-lg"
             >
               Como funciona o controller terceirizado
@@ -343,7 +344,19 @@ export default async function HomePage() {
       {/* Shorts */}
       {shorts.length > 0 && (
         <section id="shorts" className="mx-auto max-w-6xl px-6 py-20">
-          <SectionHeading eyebrow="Shorts" title="Controladoria em 1 minuto" />
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading eyebrow="Shorts" title="Controladoria em 1 minuto" />
+            {site.social.youtube && (
+              <a
+                href={site.social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-navy-700 px-6 py-3 text-sm font-bold text-navy-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy-700 hover:text-white hover:shadow-md"
+              >
+                Ver canal no YouTube →
+              </a>
+            )}
+          </div>
           <div className="mt-10">
             <Shorts shorts={shorts} />
           </div>
