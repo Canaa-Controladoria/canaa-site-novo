@@ -91,11 +91,7 @@ export default async function HomePage() {
         />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-20 sm:pt-20 sm:pb-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="fade-rise">
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.07] px-4 py-2 text-xs font-bold uppercase tracking-wide">
-              <span className="h-1.5 w-1.5 rounded-full bg-ember-600" />
-              Canaã Controladoria para Resultados · Finanças · Contabilidade · Operação
-            </div>
-            <h1 className="font-display mt-7 text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
+            <h1 className="font-display text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
               Controladoria que dá <strong className="font-extrabold">clareza</strong>, autoridade que gera{" "}
               <strong className="font-extrabold text-amber-400">resultado</strong>.
             </h1>
