@@ -288,6 +288,48 @@ export const solutionsContent: Record<string, SolutionContent> = {
     seoTitle: "Training Empresarial: desenvolva resultados da equipe",
     seoDescription: "Desenvolva seu time com o Training da Canaã. Capacite gestores e equipes com foco em finanças, estratégia e performance empresarial.",
   },
+
+  "consultoria-financeira": {
+    slug: "consultoria-financeira",
+    navTitle: "Consultoria Financeira",
+    eyebrow: "Organize a gestão financeira da sua empresa",
+    heroTitle: "Consultoria financeira: caixa, orçamento e decisões com dados",
+    heroLede:
+      "Organizamos a gestão financeira da sua empresa — fluxo de caixa, capital de giro, orçamento e indicadores — e transformamos esses dados em decisões, com uma rotina contínua de controladoria ao lado do seu time.",
+    highlights: [
+      {
+        title: "Diagnóstico do momento financeiro",
+        body: "Mapeamos caixa, endividamento e indicadores para saber exatamente de onde a empresa parte.",
+      },
+      {
+        title: "Plano de ação orientado a dados",
+        body: "Cada recomendação vem amarrada a um número e a uma decisão prática para o negócio.",
+      },
+    ],
+    topicsHeading: "Mais sobre a consultoria financeira Canaã",
+    topics: [
+      {
+        title: "Fluxo de caixa e capital de giro",
+        body: "Visão clara de entradas e saídas para decidir com antecedência, sem sustos no fim do mês.",
+      },
+      {
+        title: "Orçamento e FP&A",
+        body: "Orçamento bottom-up e acompanhamento do realizado × orçado, com análise de desvios.",
+      },
+      {
+        title: "Indicadores financeiros",
+        body: "Poucos indicadores, bem escolhidos, que realmente orientam a tomada de decisão.",
+      },
+      {
+        title: "Rotina de controladoria",
+        body: "Relatórios e reuniões periódicas para que a análise financeira vire ação recorrente.",
+      },
+    ],
+    proposalHeading: "Solicite uma proposta de consultoria financeira",
+    seoTitle: "Consultoria Financeira para empresas | Canaã Controladoria",
+    seoDescription:
+      "Consultoria financeira que organiza fluxo de caixa, orçamento e indicadores da sua empresa e transforma dados em decisões, com a Canaã Controladoria.",
+  },
 };
 
 export function getSolutionSlugs() {
