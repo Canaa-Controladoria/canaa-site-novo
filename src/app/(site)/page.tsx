@@ -86,7 +86,7 @@ export default async function HomePage() {
           <div className="fade-rise">
             <h1 className="font-display text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
               Controladoria que dá <strong className="font-extrabold">clareza</strong>, autoridade que gera{" "}
-              <strong className="font-extrabold text-amber-400">resultado</strong>.
+              <strong className="font-extrabold">resultado</strong>.
             </h1>
             <p className="mt-6 max-w-lg text-lg leading-relaxed text-blue-mist-light">
               Somos a extensão financeira de médias empresas que querem decisões seguras, números confiáveis e uma
