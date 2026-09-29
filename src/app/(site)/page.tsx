@@ -81,7 +81,13 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="hero relative overflow-hidden bg-navy-925 text-white">
-        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
+        <div
+          className="hero-overlay pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 82% 18%, rgba(13,90,149,0.55) 0%, transparent 45%), linear-gradient(to bottom right, rgba(255,255,255,0.05), transparent, rgba(0,0,0,0.25))",
+          }}
+        />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-6 pt-16 pb-20 sm:pt-20 sm:pb-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="fade-rise">
             <h1 className="font-display text-4xl sm:text-5xl font-light leading-[1.14] tracking-tight">
@@ -127,7 +133,7 @@ export default async function HomePage() {
             <div className="absolute -top-4 right-4 z-10 rotate-2 rounded-lg bg-accent px-4 py-2 text-xs font-extrabold text-accent-content shadow-lg">
               +19,2% vs. meta
             </div>
-            <div className="rounded-box border border-white/10 bg-white/[0.06] p-6">
+            <div className="rounded-box border border-white/15 bg-white/[0.09] p-6 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.65)] backdrop-blur-sm">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-bold">Resultado consolidado · mês</p>
                 <span className="h-2 w-2 rounded-full bg-ember-600" />
@@ -135,21 +141,21 @@ export default async function HomePage() {
               <div className="mt-5">
                 <GrowBars values={[38, 55, 46, 82, 64, 95]} />
               </div>
-              <div className="mt-1.5 flex justify-between text-[11px] text-blue-mist">
+              <div className="mt-1.5 flex justify-between text-[11px] text-blue-mist-light">
                 {["Fev", "Mar", "Abr", "Mai", "Jun", "Jul"].map((m) => (
                   <span key={m}>{m}</span>
                 ))}
               </div>
               <div className="mt-5 grid grid-cols-2 gap-3.5">
-                <div className="rounded-lg border border-white/10 bg-white/5 p-3.5">
+                <div className="rounded-lg border border-white/15 bg-white/[0.08] p-3.5">
                   <p className="text-lg font-extrabold">42,3%</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-blue-mist">
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-blue-mist-light">
                     Margem de contribuição
                   </p>
                 </div>
-                <div className="rounded-lg border border-white/10 bg-white/5 p-3.5">
+                <div className="rounded-lg border border-white/15 bg-white/[0.08] p-3.5">
                   <p className="text-lg font-extrabold">R$ 8,2M</p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-blue-mist">
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-wide text-blue-mist-light">
                     Faturamento realizado
                   </p>
                 </div>
