@@ -6,6 +6,8 @@ const staticPaths = [
   "",
   "quem-somos",
   "solucoes",
+  "solucoes/controller-terceirizado",
+  "metodo",
   "blog",
   "trabalhe-conosco",
   "contato",

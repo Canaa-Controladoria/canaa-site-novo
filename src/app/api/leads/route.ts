@@ -9,6 +9,7 @@ const leadSchema = z.object({
   company: z.string().max(200).optional().default(""),
   whatsapp: z.string().min(8).max(30),
   email: z.string().email().optional().or(z.literal("")).default(""),
+  revenueRange: z.string().max(80).optional().default(""),
   lgpdConsent: z.literal(true),
 });
 
@@ -18,12 +19,12 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Dados inválidos", details: parsed.error.flatten() }, { status: 400 });
   }
-  const { source, name, company, whatsapp, email } = parsed.data;
+  const { source, name, company, whatsapp, email, revenueRange } = parsed.data;
 
   const db = getDb();
   db.prepare(
-    `INSERT INTO leads (source, name, company, whatsapp, email, lgpd_consent) VALUES (?, ?, ?, ?, ?, 1)`
-  ).run(source, name, company, whatsapp, email);
+    `INSERT INTO leads (source, name, company, whatsapp, email, revenue_range, lgpd_consent) VALUES (?, ?, ?, ?, ?, ?, 1)`
+  ).run(source, name, company, whatsapp, email, revenueRange || null);
 
   await sendMail({
     subject: `Nova solicitação de proposta — ${source}`,
@@ -35,6 +36,7 @@ export async function POST(req: Request) {
       <p><strong>Empresa:</strong> ${escapeHtml(company || "—")}</p>
       <p><strong>WhatsApp:</strong> ${escapeHtml(whatsapp)}</p>
       <p><strong>E-mail:</strong> ${escapeHtml(email || "—")}</p>
+      ${revenueRange ? `<p><strong>Faturamento anual:</strong> ${escapeHtml(revenueRange)}</p>` : ""}
     `,
   });
 
