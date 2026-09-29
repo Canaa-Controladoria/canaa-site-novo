@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 import { NavLink } from "./NavLink";
 import { mainNav, solutions } from "@/lib/site";
@@ -7,10 +6,8 @@ import { mainNav, solutions } from "@/lib/site";
 export function Header() {
   return (
     <header className="sticky top-0 z-30 bg-navy-900 border-b border-white/10">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Logo dark />
-
-        <nav className="hidden md:flex items-center gap-8">
+      <div className="mx-auto flex max-w-6xl items-center px-6 py-4">
+        <nav className="hidden md:flex items-center gap-6 whitespace-nowrap lg:gap-8">
           {mainNav.map((item) =>
             item.label === "Soluções" ? (
               <div key={item.href} className="dropdown dropdown-hover">
@@ -47,12 +44,12 @@ export function Header() {
           )}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-3">
           <Link
-            href="/lp-controller-cfo"
+            href="/solucoes/controller-terceirizado#diagnostico"
             className="hidden md:inline-flex items-center rounded-lg bg-accent px-5 py-2.5 text-sm font-bold text-accent-content shadow-md shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg hover:shadow-accent/30 md:ml-4"
           >
-            Solicitar proposta
+            Agendar diagnóstico
           </Link>
           <MobileNav />
         </div>

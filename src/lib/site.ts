@@ -11,6 +11,8 @@ export const site = {
   social: {
     linkedin: "https://br.linkedin.com/company/cana%C3%A3-controladoria-e-finan%C3%A7as",
     instagram: "https://www.instagram.com/canaacontroladoria",
+    // TODO: preencher com a URL real do canal antes de publicar (pedir pra cliente).
+    youtube: "",
   },
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
 };
@@ -22,12 +24,11 @@ export function whatsappLink(message: string) {
 
 export const mainNav = [
   { label: "Início", href: "/" },
-  { label: "Quem somos", href: "/quem-somos" },
   { label: "Soluções", href: "/solucoes" },
   { label: "Método", href: "/metodo" },
+  { label: "Controller terceirizado", href: "/solucoes/controller-terceirizado" },
+  { label: "Quem somos", href: "/quem-somos" },
   { label: "Insights", href: "/blog" },
-  { label: "Trabalhe conosco", href: "/trabalhe-conosco" },
-  { label: "Contato", href: "/contato" },
 ];
 
 export const solutions = [
@@ -39,4 +40,5 @@ export const solutions = [
   { slug: "valuation", title: "Valuation", short: "Quanto vale sua empresa" },
   { slug: "estrutura-de-controladoria", title: "Estrutura de Controladoria", short: "Equipe e processos" },
   { slug: "training", title: "Training", short: "Desenvolvimento de equipes" },
+  { slug: "consultoria-financeira", title: "Consultoria Financeira", short: "Caixa, orçamento e decisões com dados" },
 ] as const;

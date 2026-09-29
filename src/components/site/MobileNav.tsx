@@ -56,11 +56,11 @@ export function MobileNav() {
             </div>
           </div>
           <Link
-            href="/lp-controller-cfo"
+            href="/solucoes/controller-terceirizado#diagnostico"
             onClick={() => setOpen(false)}
             className="mt-8 mb-10 inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 text-sm font-bold text-accent-content shadow-md shadow-accent/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg"
           >
-            Solicitar proposta
+            Agendar diagnóstico
           </Link>
           <p className="text-xs text-navy-500 mb-10">{site.phoneDisplay}</p>
         </div>
