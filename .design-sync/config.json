@@ -6,7 +6,8 @@
   "srcDir": ".design-sync/entry-src",
   "tsconfig": "tsconfig.json",
   "buildCmd": "npm run build",
-  "cssEntry": ".next/static/chunks/2hg7u_o82sxl8.css",
+  "cssEntry": ".next/static/chunks/0ur20k5gosuq0.css",
+  "extraFonts": ".next/static/chunks/41ls5qe8s6b4w.css",
   "readmeHeader": ".design-sync/conventions.md",
   "componentSrcMap": {
     "ImageUploadField": "src/components/admin/ImageUploadField.tsx",
