@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { BIDashboardMockup } from "@/components/site/BIDashboardMockup";
 import { CTAButton } from "@/components/site/CTAButton";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
@@ -49,6 +50,12 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
                 <p className="mt-2 text-sm leading-relaxed text-navy-600">{h.body}</p>
               </div>
             ))}
+          </div>
+        )}
+
+        {content.slug === "report-estrategico" && (
+          <div className="mt-12">
+            <BIDashboardMockup />
           </div>
         )}
 
