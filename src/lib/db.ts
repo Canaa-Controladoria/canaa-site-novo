@@ -112,6 +112,7 @@ function migrate(db: Database.Database) {
       whatsapp TEXT,
       email TEXT,
       message TEXT,
+      revenue_range TEXT,
       lgpd_consent INTEGER NOT NULL DEFAULT 0,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
@@ -122,6 +123,11 @@ function migrate(db: Database.Database) {
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
   `);
+
+  const leadColumns = db.prepare(`PRAGMA table_info(leads)`).all() as { name: string }[];
+  if (!leadColumns.some((c) => c.name === "revenue_range")) {
+    db.exec(`ALTER TABLE leads ADD COLUMN revenue_range TEXT`);
+  }
 }
 
 export function getDb(): Database.Database {

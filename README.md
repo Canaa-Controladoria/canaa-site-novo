@@ -79,7 +79,9 @@ cuidado depois que o site estiver em produção.
 - `src/app/api/` — rotas de formulário, upload e CRUD do admin
 - `src/lib/blog.ts` — leitura pública do blog (só posts publicados)
 - `src/lib/admin-blog.ts` — CRUD completo usado pelo painel
-- `src/lib/solutions-content.ts` — conteúdo das 8 páginas de soluções
+- `src/lib/solutions-content.ts` — conteúdo das páginas de soluções genéricas (listadas em `src/lib/site.ts`); a
+  página "Controller terceirizado" é uma página própria, fora desse template
+  (`src/app/(site)/solucoes/controller-terceirizado/`)
 
 ## Entidades
 
@@ -123,7 +125,8 @@ com `ADMIN_PASSWORD` atualizado no `.env.local`.
 ### Lead (`leads`)
 
 `id`, `source` (identifica qual formulário enviou, ex. "proposta"), `name`, `company`, `whatsapp`,
-`email`, `lgpd_consent`, `created_at` — armazenados como enviados pelo formulário
+`email`, `revenue_range` (faixa de faturamento anual, só preenchida pelo formulário da página
+Controller Terceirizado), `lgpd_consent`, `created_at` — armazenados como enviados pelo formulário
 (`src/app/api/leads/route.ts`). A coluna `message` existe no schema mas nenhum formulário atual a
 preenche (fica sempre `NULL`) — reservada para um futuro campo de mensagem livre.
 
