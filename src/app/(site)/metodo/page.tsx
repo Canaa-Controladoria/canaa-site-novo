@@ -166,15 +166,8 @@ export default function MetodoPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-900 text-white">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
+      <section className="hero relative overflow-hidden bg-navy-925 text-white">
+        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
         <div className="relative mx-auto max-w-6xl px-6 pt-14 pb-16 sm:pt-16 sm:pb-20">
           <p className="text-sm text-blue-mist">
             <Link href="/" className="hover:text-white">
@@ -409,15 +402,8 @@ export default function MetodoPage() {
       </section>
 
       {/* Compromisso */}
-      <section className="relative overflow-hidden bg-navy-900 py-20 text-white">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)",
-            backgroundSize: "56px 56px",
-          }}
-        />
+      <section className="hero relative overflow-hidden bg-navy-925 py-20 text-white">
+        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 lg:flex-row lg:items-start">
           <p className="w-full shrink-0 font-mono text-xs uppercase tracking-[0.2em] text-blue-mist lg:w-[280px]">
             Nosso compromisso
