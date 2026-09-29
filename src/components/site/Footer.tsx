@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
-import { NavLink } from "./NavLink";
-import { site, mainNav } from "@/lib/site";
+import { site } from "@/lib/site";
 
-const quickLinks = [
-  { label: "Início", href: "/" },
-  { label: "Sobre nós", href: "/quem-somos" },
-  { label: "Soluções", href: "/solucoes" },
-  { label: "Método", href: "/metodo" },
-  { label: "Conteúdos", href: "/blog" },
-  { label: "Contato", href: "/contato" },
-  { label: "Trabalhe conosco", href: "/trabalhe-conosco" },
+const solutionLinks = [
+  { label: "Controller terceirizado", href: "/solucoes/controller-terceirizado" },
+  { label: "Consultoria financeira", href: "/solucoes/consultoria-financeira" },
+  { label: "BI e Report Estratégico", href: "/solucoes/report-estrategico" },
+  { label: "Valuation", href: "/solucoes/valuation" },
+];
+
+const companyLinks = [
+  { label: "Quem somos", href: "/quem-somos" },
+  { label: "Dra. Ana Luísa Amorim", href: "/quem-somos#fundadora" },
+  { label: "Insights", href: "/blog" },
+  { label: "Programa de Trainee", href: "/trabalhe-conosco" },
 ];
 
 export function Footer() {
@@ -35,19 +38,11 @@ export function Footer() {
         <div>
           <span className="font-display text-2xl text-white">Canaã</span>
           <p className="mt-3 text-sm">
-            Controladoria outsourcing, há mais de uma década atuando no mercado com metodologia orientada a
-            resultados.
+            A Canaã Controladoria é uma empresa de controladoria outsourcing e consultoria financeira, fundada pela
+            Dra. Ana Luísa Amorim. Atua como controller terceirizado de médias empresas, integrando Finanças,
+            Contabilidade e Operação.
           </p>
           <div className="mt-4 flex gap-3">
-            <a
-              href={site.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 hover:border-accent hover:text-accent"
-            >
-              in
-            </a>
             <a
               href={site.social.instagram}
               target="_blank"
@@ -57,17 +52,50 @@ export function Footer() {
             >
               ig
             </a>
+            <a
+              href={site.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 hover:border-accent hover:text-accent"
+            >
+              in
+            </a>
+            {site.social.youtube && (
+              <a
+                href={site.social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 hover:border-accent hover:text-accent"
+              >
+                yt
+              </a>
+            )}
           </div>
         </div>
 
         <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-white/60 mb-3">Acesso rápido</p>
+          <p className="font-mono text-xs uppercase tracking-widest text-white/60 mb-3">Soluções</p>
           <ul className="space-y-2 text-sm">
-            {quickLinks.map((l) => (
+            {solutionLinks.map((l) => (
               <li key={l.href}>
-                <NavLink href={l.href} className="hover:text-white">
+                <Link href={l.href} className="hover:text-white">
                   {l.label}
-                </NavLink>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-white/60 mb-3">Empresa</p>
+          <ul className="space-y-2 text-sm">
+            {companyLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="hover:text-white">
+                  {l.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -87,19 +115,13 @@ export function Footer() {
                 {site.phoneDisplay}
               </a>
             </li>
-          </ul>
-        </div>
-
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-white/60 mb-3">Atendimento</p>
-          <p className="text-sm">{site.hours}.</p>
-          <nav className="mt-4 hidden lg:block">
-            {mainNav.slice(1, 3).map((l) => (
-              <Link key={l.href} href={l.href} className="mr-4 text-sm hover:text-white">
-                {l.label}
+            <li>{site.hours}.</li>
+            <li>
+              <Link href="/contato" className="font-semibold hover:text-white">
+                Fale conosco →
               </Link>
-            ))}
-          </nav>
+            </li>
+          </ul>
         </div>
       </div>
 

@@ -51,6 +51,9 @@ const team = [
   { name: "[Nome]", role: "[Cargo]" },
 ];
 
+// Ocultada a pedido da cliente até termos as fotos reais dos colaboradores.
+const SHOW_TEAM_SECTION = false;
+
 export default function QuemSomosPage() {
   return (
     <>
@@ -143,7 +146,7 @@ export default function QuemSomosPage() {
       </section>
 
       {/* Fundadora */}
-      <section className="bg-base-100 py-20">
+      <section id="fundadora" className="bg-base-100 py-20">
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 lg:flex-row lg:items-center">
           <div className="flex aspect-[4/5] w-full shrink-0 items-center justify-center rounded-box border border-dashed border-base-300 bg-base-200 p-10 text-center text-sm text-navy-500 lg:w-[380px]">
             [Foto profissional da Dra. Ana Luísa Amorim]
@@ -327,20 +330,22 @@ export default function QuemSomosPage() {
       </section>
 
       {/* Equipe */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <SectionHeading eyebrow="Equipe" title="Quem cuida dos seus números" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member, i) => (
-            <div key={i} className="flex flex-col gap-3">
-              <div className="flex aspect-[4/5] items-center justify-center rounded-box border border-dashed border-base-300 bg-base-200 text-sm text-navy-500">
-                [foto]
+      {SHOW_TEAM_SECTION && (
+        <section className="mx-auto max-w-6xl px-6 py-20">
+          <SectionHeading eyebrow="Equipe" title="Quem cuida dos seus números" />
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((member, i) => (
+              <div key={i} className="flex flex-col gap-3">
+                <div className="flex aspect-[4/5] items-center justify-center rounded-box border border-dashed border-base-300 bg-base-200 text-sm text-navy-500">
+                  [foto]
+                </div>
+                <strong className="text-lg text-navy-900">{member.name}</strong>
+                <span className="-mt-2 text-sm text-navy-600">{member.role}</span>
               </div>
-              <strong className="text-lg text-navy-900">{member.name}</strong>
-              <span className="-mt-2 text-sm text-navy-600">{member.role}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Trainee */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
