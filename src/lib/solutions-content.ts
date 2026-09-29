@@ -14,7 +14,6 @@ export interface SolutionContent {
   eyebrow?: string;
   heroTitle: string;
   heroLede: string;
-  heroImage?: string;
   highlights?: [SolutionHighlight, SolutionHighlight];
   topicsHeading: string;
   topics: SolutionTopic[];

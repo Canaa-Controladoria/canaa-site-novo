@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BIDashboardMockup } from "@/components/site/BIDashboardMockup";
 import { CTAButton } from "@/components/site/CTAButton";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
@@ -54,14 +53,22 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
         )}
 
         {content.slug === "report-estrategico" && (
-          <div className="mt-12">
-            <BIDashboardMockup />
-          </div>
-        )}
-
-        {content.heroImage && (
-          <div className="relative mt-12 aspect-[16/9] w-full overflow-hidden rounded-box border border-base-300">
-            <Image src={content.heroImage} alt={content.heroTitle} fill className="object-contain bg-base-200 p-6" sizes="100vw" />
+          <div className="mt-12 flex flex-col items-center gap-6">
+            <video
+              src="/videos/bi-mockup-lap.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full max-w-2xl rounded-box border border-base-300"
+            />
+            <Image
+              src="/images/power-bi-mobile-apps-all-up.png"
+              alt="BI Canaã no celular, tablet e computador"
+              width={580}
+              height={276}
+              className="w-full max-w-xl"
+            />
           </div>
         )}
       </section>
