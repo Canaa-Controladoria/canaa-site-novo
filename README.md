@@ -13,7 +13,9 @@ contato/proposta) mais um blog com painel de administração:
 - O cliente (dono do site) tem um login de administrador em `/admin`. Nesse painel ele cria,
   edita, apaga ou oculta posts (voltando o status para rascunho tira o post do ar na hora),
   organiza por categoria/tags e escreve os campos de SEO — tudo sem precisar mexer em código ou
-  fazer novo deploy.
+  fazer novo deploy. **Isso só é verdade rodando localmente hoje** — ver
+  [Banco de dados em produção (Vercel)](#banco-de-dados-em-produção-vercel--ainda-não-é-persistente)
+  antes de liberar o painel pra cliente usar no site publicado.
 - Formulários do site (proposta, contato, trabalhe conosco, newsletter) gravam o lead no banco e,
   se o SMTP estiver configurado, também disparam um e-mail de aviso.
 
@@ -45,7 +47,47 @@ Acesse **/admin/login**.
 
 No painel dá para criar/editar/excluir posts, escolher categoria e tags, subir imagem destacada,
 preencher SEO (título, meta descrição, palavra-chave) e publicar ou salvar como rascunho — tudo
-sem precisar mexer em código ou fazer novo deploy.
+sem precisar mexer em código ou fazer novo deploy **localmente**. Em produção (Vercel) isso ainda
+não persiste — ver próxima seção.
+
+## Banco de dados em produção (Vercel) — ainda não é persistente
+
+**Login do admin não funciona no deploy da Vercel hoje, e mesmo que funcionasse, nada que fosse
+escrito pelo painel sobreviveria.** Duas causas, ambas intencionais e documentadas no código
+(`src/lib/db.ts`, comentário no topo do arquivo):
+
+1. **`admin_users` foi excluída de propósito do banco versionado** (`data/seed.db`, commit
+   `6191460`) — critério de segurança pra não commitar hash de senha no repo. Sem essa tabela, o
+   login em `/admin/login` falha em qualquer deploy (preview ou produção).
+2. **O filesystem da Vercel é somente-leitura fora de `/tmp`** (Serverless/Edge Functions não têm
+   disco persistente). Por isso `src/lib/db.ts` copia `data/seed.db` pra `/tmp/canaa.db` a cada
+   cold start (commit `c30c623`) e abre o SQLite a partir de lá. Isso resolve "o site consegue
+   *ler* o conteúdo" pro preview funcionar, mas qualquer `INSERT`/`UPDATE` feito através do painel
+   admin (post novo, edição, lead de formulário, inscrição de newsletter) só vive enquanto aquela
+   instância serverless específica estiver de pé — some no próximo cold start, e nem é
+   compartilhado entre instâncias rodando em paralelo nesse meio tempo.
+
+Hoje o fluxo real de publicação é: editar/criar posts **localmente** (onde `data/canaa.db` é um
+arquivo comum em disco, persistente de verdade) e depois decidir como levar esse banco pro ar —
+não existe ainda um passo automatizado pra isso.
+
+**O que falta pra resolver antes da cliente usar o painel sozinha em produção:** trocar o SQLite em
+arquivo por um banco alcançável pelas funções serverless da Vercel pela rede, não pelo disco local.
+Opções via Vercel Marketplace (Vercel Postgres/KV nativos foram descontinuados):
+
+- **Neon Postgres** — provavelmente a troca mais direta; exige reescrever as queries de
+  `better-sqlite3` (síncronas) pro client Postgres (`@neondatabase/serverless` ou `pg`, assíncronas)
+  em `src/lib/db.ts` e nos módulos que fazem query direta (`src/lib/blog.ts`,
+  `src/lib/admin-blog.ts`, `src/lib/admin-shorts.ts`, `src/lib/auth.ts`). O `migrate()` em `db.ts` já
+  documenta o schema inteiro (tabelas, colunas, índices) — é a referência pra escrever o schema SQL
+  equivalente em Postgres (tipos, `SERIAL` no lugar de `AUTOINCREMENT`, etc.).
+- **Turso** (libSQL, compatível com SQLite) — migração mais parecida com o que já existe hoje (SQL
+  quase idêntico), mas ainda exige trocar `better-sqlite3` pelo client `@libsql/client` (também
+  assíncrono) nos mesmos arquivos acima.
+
+Qualquer uma das duas elimina a necessidade do `seedTmpDb()`/`/tmp` inteiramente — o banco vive
+fora do processo serverless, então lê e escreve normalmente em qualquer ambiente (local, preview,
+produção) apontando pra mesma connection string via variável de ambiente.
 
 ## Repopular o banco a partir do export do WordPress
 
@@ -136,6 +178,9 @@ preenche (fica sempre `NULL`) — reservada para um futuro campo de mensagem liv
 
 ## Pendências conhecidas / próximos passos sugeridos
 
+- **Migrar o banco pra algo persistente antes da cliente usar o painel admin em produção** — ver
+  [Banco de dados em produção (Vercel)](#banco-de-dados-em-produção-vercel--ainda-não-é-persistente).
+  Sem isso, ela não consegue postar sozinha no site publicado.
 - Configurar SMTP real em produção para os formulários enviarem e-mail de fato.
 - As imagens (logos de clientes, fotos de posts antigos) ainda apontam para o domínio WordPress
   atual (`canaacontroladoria.com.br/wp-content/...`). Migrar para `public/uploads` ou um storage
