@@ -13,7 +13,7 @@
   --color-base-300: #e1e6ef;
   --color-base-content: #1c2234;
 
-  --color-primary: #004b84;
+  --color-primary: #0a3f68;
   --color-primary-content: #ffffff;
 
   --color-secondary: #8da2d0;
@@ -22,7 +22,7 @@
   --color-accent: #c33628;
   --color-accent-content: #ffffff;
 
-  --color-neutral: #004b84;
+  --color-neutral: #0a3f68;
   --color-neutral-content: #f4f6fa;
 
   --color-info: #434d75;
@@ -53,10 +53,10 @@
   --font-mono: var(--font-open-sans);
 
   --color-navy-950: #252d48;
-  --color-navy-925: #003e6c;
-  --color-navy-900: #004b84;
-  --color-navy-800: #004b84;
-  --color-navy-700: #004b84;
+  --color-navy-925: #0a3454;
+  --color-navy-900: #0a3f68;
+  --color-navy-800: #0a3f68;
+  --color-navy-700: #0a3f68;
   --color-navy-600: #5b6478;
   --color-navy-500: #5b6478;
   --color-blue-mist: #8da2d0;
