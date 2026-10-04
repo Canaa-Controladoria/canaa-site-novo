@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CTAButton } from "@/components/site/CTAButton";
+import { GiroCharts } from "@/components/site/GiroCharts";
 import { KpiGauges } from "@/components/site/KpiGauges";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
@@ -75,6 +76,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
       </section>
 
       {content.slug === "gestao-por-squad" && <KpiGauges />}
+      {content.slug === "gestao-para-giro" && <GiroCharts />}
 
       <section className="bg-base-200 py-16">
         <div className="mx-auto max-w-6xl px-6">
