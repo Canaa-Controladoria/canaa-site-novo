@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CTAButton } from "@/components/site/CTAButton";
+import { KpiGauges } from "@/components/site/KpiGauges";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
 import { ProposalForm } from "@/components/forms/ProposalForm";
@@ -72,6 +73,8 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
           </div>
         )}
       </section>
+
+      {content.slug === "gestao-por-squad" && <KpiGauges />}
 
       <section className="bg-base-200 py-16">
         <div className="mx-auto max-w-6xl px-6">
