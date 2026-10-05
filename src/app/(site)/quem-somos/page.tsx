@@ -59,7 +59,6 @@ export default function QuemSomosPage() {
     <>
       {/* Hero */}
       <section className="hero relative overflow-hidden bg-navy-925 text-white">
-        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
         <div className="relative mx-auto max-w-6xl px-6 pt-14 pb-16 sm:pt-16 sm:pb-20">
           <p className="text-sm text-blue-mist">
             <Link href="/" className="hover:text-white">

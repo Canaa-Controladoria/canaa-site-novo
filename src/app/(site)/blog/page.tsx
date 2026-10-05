@@ -22,7 +22,6 @@ export default async function BlogPage({
   return (
     <>
       <section className="hero relative overflow-hidden bg-navy-925 text-white">
-        <div className="hero-overlay pointer-events-none bg-gradient-to-br from-white/[0.05] via-transparent to-black/25" />
         <div className="relative mx-auto max-w-6xl px-6 py-14 text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-blue-mist mb-3">Insights</p>
           <h1 className="font-display text-4xl leading-tight">Controladoria e Inteligência Financeira</h1>
