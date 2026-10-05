@@ -18,7 +18,7 @@ const companyLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-navy-950 text-blue-mist-light">
+    <footer className="bg-navy-900 text-blue-mist-light">
       <div className="mx-auto max-w-6xl px-6 py-6">
         <div className="ledger-rule ledger-rule--dark mb-6" />
         <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
