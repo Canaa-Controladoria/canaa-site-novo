@@ -306,7 +306,14 @@ export default async function HomePage() {
               operação.”
             </blockquote>
             <p className="text-base leading-relaxed text-navy-600">
-              [Mini-bio: formação, trajetória, certificações e o que motivou a criação do método dos 3 pilares.]
+              Formada em Administração de Empresas pela USP (2002), com mestrado em Administração de Organizações
+              (2006) e doutorado em Controladoria e Contabilidade (2010), também pela USP. Começou a carreira como
+              analista de investimento e crédito no Banco Ribeirão Preto S/A, atuando em análise de crédito,
+              tesouraria e operações financeiras de empresas da região. Em paralelo à pós-graduação, lecionou
+              Controladoria, Finanças Corporativas e Mercado de Capitais na USP, na Estácio Uniseb e na FGV. Em
+              2006, fundou a Canaã Controladoria, atuando como consultora e pesquisadora para empresas de
+              indústria, alimentos, varejo e agronegócio — experiência que deu origem ao método que a Canaã aplica
+              até hoje.
             </p>
             <div className="flex flex-wrap gap-3">
               <a
