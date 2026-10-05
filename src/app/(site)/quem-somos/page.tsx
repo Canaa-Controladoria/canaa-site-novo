@@ -138,28 +138,28 @@ export default function QuemSomosPage() {
       </section>
 
       {/* Fundadora */}
-      <section id="fundadora" className="bg-base-100 py-20">
-        <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 lg:flex-row lg:items-center">
-          <div className="flex aspect-[4/5] w-full shrink-0 items-center justify-center rounded-box border border-dashed border-base-300 bg-base-200 p-10 text-center text-sm text-navy-500 lg:w-[380px]">
-            [Foto profissional da Dra. Ana Luísa Amorim]
+      <section id="fundadora" className="bg-base-100 py-14">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 lg:flex-row lg:items-center">
+          <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-box lg:w-[220px]">
+            <Image
+              src="/images/ana-luisa-amorim.jpeg"
+              alt="Dra. Ana Luísa Amorim"
+              fill
+              sizes="220px"
+              className="object-cover"
+            />
           </div>
-          <div className="flex flex-1 flex-col gap-5">
+          <div className="flex flex-1 flex-col gap-3">
             <SectionHeading eyebrow="Fundadora" title="Dra. Ana Luísa Amorim" />
-            <span className="text-xl font-semibold text-navy-900">Especialista em Controladoria Estratégica</span>
-            <p className="text-base leading-relaxed text-navy-600">
-              Formada em Administração de Empresas pela USP (2002), com mestrado em Administração de Organizações
-              (2006) e doutorado em Controladoria e Contabilidade (2010), também pela USP. Começou a carreira como
-              analista de investimento e crédito no Banco Ribeirão Preto S/A, atuando em análise de crédito,
-              tesouraria e operações financeiras de empresas da região. Em paralelo à pós-graduação, lecionou
-              Controladoria, Finanças Corporativas e Mercado de Capitais na USP, na Estácio Uniseb e na FGV. Em
-              2006, fundou a Canaã Controladoria, atuando como consultora e pesquisadora para empresas de
-              indústria, alimentos, varejo e agronegócio — experiência que deu origem ao método que a Canaã aplica
-              até hoje.
+            <span className="text-base font-semibold text-navy-900">
+              Sócia Fundadora da Canaã - Controladoria e Finanças - Gestão por Resultado!
+            </span>
+            <p className="text-sm leading-relaxed text-navy-600">
+              Doutora em Controladoria e Contabilidade pela Universidade de São Paulo (2010). Mestre em
+              Administração de Organizações pela Universidade de São Paulo (2006). Coordenadora do Núcleo de
+              Finanças CIESP - Ribeirão Preto e membro do Comitê de Empreendedorismo da Amcham - Ribeirão Preto,
+              além de fazer parte do Conselho Diretivo da ACI RP.
             </p>
-            <blockquote className="rounded-box bg-base-200 px-7 py-6 text-xl font-semibold leading-relaxed text-navy-900">
-              “Controladoria não é relatório. É a ferramenta que amarra a estratégia da empresa ao que acontece na
-              operação.”
-            </blockquote>
             <div className="flex flex-wrap gap-3">
               <a
                 href={site.social.linkedin}
