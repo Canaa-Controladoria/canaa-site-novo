@@ -7,6 +7,7 @@ import { GiroCharts } from "@/components/site/GiroCharts";
 import { KpiGauges } from "@/components/site/KpiGauges";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
+import { ValuationDcfDiagram } from "@/components/site/ValuationDcfDiagram";
 import { XpaCicloSection } from "@/components/site/XpaCicloSection";
 import { XpaSection } from "@/components/site/XpaSection";
 import { ProposalForm } from "@/components/forms/ProposalForm";
@@ -34,7 +35,8 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
     content.slug === "gestao-para-giro" ||
     content.slug === "report-estrategico" ||
     content.slug === "gestao-de-futuro" ||
-    content.slug === "cubo-de-resultado";
+    content.slug === "cubo-de-resultado" ||
+    content.slug === "valuation";
 
   return (
     <>
@@ -60,6 +62,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
       {content.slug === "gestao-para-giro" && <GiroCharts />}
       {content.slug === "gestao-de-futuro" && <XpaCicloSection />}
       {content.slug === "cubo-de-resultado" && <CuboResultadoSection />}
+      {content.slug === "valuation" && <ValuationDcfDiagram />}
 
       {content.slug === "report-estrategico" && (
         <section className="mx-auto max-w-6xl px-6 pb-16">
