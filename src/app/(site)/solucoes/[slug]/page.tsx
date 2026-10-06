@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CTAButton } from "@/components/site/CTAButton";
+import { CuboResultadoSection } from "@/components/site/CuboResultadoSection";
 import { GiroCharts } from "@/components/site/GiroCharts";
 import { KpiGauges } from "@/components/site/KpiGauges";
 import { SectionHeading } from "@/components/site/SectionHeading";
@@ -32,7 +33,8 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
     content.slug === "gestao-por-squad" ||
     content.slug === "gestao-para-giro" ||
     content.slug === "report-estrategico" ||
-    content.slug === "gestao-de-futuro";
+    content.slug === "gestao-de-futuro" ||
+    content.slug === "cubo-de-resultado";
 
   return (
     <>
@@ -57,6 +59,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
       {content.slug === "gestao-por-squad" && <KpiGauges />}
       {content.slug === "gestao-para-giro" && <GiroCharts />}
       {content.slug === "gestao-de-futuro" && <XpaCicloSection />}
+      {content.slug === "cubo-de-resultado" && <CuboResultadoSection />}
 
       {content.slug === "report-estrategico" && (
         <section className="mx-auto max-w-6xl px-6 pb-16">
