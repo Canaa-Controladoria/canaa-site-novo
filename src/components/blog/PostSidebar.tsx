@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getAllCategoriesWithCounts, getRecentPosts } from "@/lib/blog";
 
-export function PostSidebar() {
-  const categories = getAllCategoriesWithCounts();
-  const recent = getRecentPosts(5);
+export async function PostSidebar() {
+  const categories = await getAllCategoriesWithCounts();
+  const recent = await getRecentPosts(5);
 
   return (
     <aside className="space-y-10">

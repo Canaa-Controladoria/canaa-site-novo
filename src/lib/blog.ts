@@ -1,10 +1,14 @@
 import "server-only";
-import { getDb } from "./db";
+import { toHTML, type PortableTextHtmlComponents } from "@portabletext/to-html";
+import type { PortableTextBlock } from "@portabletext/types";
+import slugify from "slugify";
+import { client } from "@/sanity/client";
+import { urlFor } from "@/sanity/image";
 
 export type PostStatus = "draft" | "published";
 
 export interface PostRecord {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   path: string;
@@ -24,199 +28,191 @@ export interface PostRecord {
   toc: { level: "h2" | "h3"; text: string; id: string }[];
 }
 
+interface CategoryRef {
+  name: string;
+  slug: string;
+}
+
+interface PostDoc {
+  id: string;
+  title: string;
+  slug: string;
+  primaryCategorySlug: string;
+  publishedAt: string | null;
+  updatedAt: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  focusKeyword: string | null;
+  excerpt: string | null;
+  featuredImage: { asset?: { _ref: string } } | null;
+  primaryCategory: CategoryRef | null;
+  extraCategories: CategoryRef[] | null;
+  tags: CategoryRef[] | null;
+  body: PortableTextBlock[] | null;
+}
+
+const POST_FIELDS = `
+  "id": _id,
+  title,
+  "slug": slug.current,
+  "primaryCategorySlug": primaryCategory->slug.current,
+  publishedAt,
+  "updatedAt": _updatedAt,
+  seoTitle, seoDescription, focusKeyword, excerpt,
+  featuredImage,
+  "primaryCategory": primaryCategory->{name, "slug": slug.current},
+  "extraCategories": categories[]->{name, "slug": slug.current},
+  "tags": tags[]->{name, "slug": slug.current},
+  body
+`;
+
+function escapeAttr(value: string): string {
+  return value.replace(/"/g, "&quot;").replace(/</g, "&lt;");
+}
+
+function blockText(block: PortableTextBlock): string {
+  const children = (block.children ?? []) as { text?: string }[];
+  return children.map((c) => c.text ?? "").join(" ");
+}
+
+function headingId(block: PortableTextBlock): string {
+  return slugify(blockText(block), { lower: true, strict: true }) || "secao";
+}
+
+const htmlComponents: Partial<PortableTextHtmlComponents> = {
+  types: {
+    image: ({ value }) => {
+      const url = urlFor(value).width(1200).fit("max").auto("format").url();
+      const alt = escapeAttr((value as { alt?: string }).alt ?? "");
+      return `<figure><img src="${url}" alt="${alt}" loading="lazy" /></figure>`;
+    },
+  },
+  block: {
+    h2: ({ children, value }) => `<h2 id="${headingId(value)}">${children}</h2>`,
+    h3: ({ children, value }) => `<h3 id="${headingId(value)}">${children}</h3>`,
+  },
+};
+
+function renderBody(body: PortableTextBlock[] | null): string {
+  if (!body || body.length === 0) return "";
+  return toHTML(body, { components: htmlComponents });
+}
+
+function readingTime(body: PortableTextBlock[] | null): number {
+  if (!body) return 1;
+  const words = body
+    .filter((b) => b._type === "block")
+    .map(blockText)
+    .join(" ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
 function extractToc(html: string): PostRecord["toc"] {
   const toc: PostRecord["toc"] = [];
   const re = /<h([23])[^>]*\sid="([^"]*)"[^>]*>([\s\S]*?)<\/h\1>/g;
   let match: RegExpExecArray | null;
   while ((match = re.exec(html))) {
     const level = match[1] === "2" ? "h2" : "h3";
-    const id = match[2];
     const text = match[3].replace(/<[^>]+>/g, "").trim();
-    if (text) toc.push({ level, id, text });
+    if (text) toc.push({ level, id: match[2], text });
   }
   return toc;
 }
 
-interface PostRow {
-  id: number;
-  title: string;
-  slug: string;
-  primary_category_slug: string;
-  status: PostStatus;
-  published_at: string | null;
-  updated_at: string;
-  seo_title: string | null;
-  seo_description: string | null;
-  focus_keyword: string | null;
-  excerpt: string | null;
-  content_html: string;
-  featured_image: string | null;
-  reading_time_minutes: number;
+function dedupeCategories(primary: CategoryRef | null, extra: CategoryRef[] | null): CategoryRef[] {
+  const all = [primary, ...(extra ?? [])].filter((c): c is CategoryRef => Boolean(c));
+  const seen = new Set<string>();
+  return all.filter((c) => (seen.has(c.slug) ? false : seen.add(c.slug)));
 }
 
-function toRecord(row: PostRow): PostRecord {
-  const db = getDb();
-  const categories = db
-    .prepare(
-      `SELECT c.name, c.slug FROM categories c
-       JOIN post_categories pc ON pc.category_id = c.id
-       WHERE pc.post_id = ? ORDER BY c.name`
-    )
-    .all(row.id) as { name: string; slug: string }[];
-  const tags = db
-    .prepare(
-      `SELECT t.name, t.slug FROM tags t
-       JOIN post_tags pt ON pt.tag_id = t.id
-       WHERE pt.post_id = ? ORDER BY t.name`
-    )
-    .all(row.id) as { name: string; slug: string }[];
-
+function toRecord(doc: PostDoc): PostRecord {
+  const contentHtml = renderBody(doc.body);
   return {
-    id: row.id,
-    title: row.title,
-    slug: row.slug,
-    path: `/${row.primary_category_slug}/${row.slug}`,
-    primaryCategorySlug: row.primary_category_slug,
-    status: row.status,
-    publishedAt: row.published_at,
-    updatedAt: row.updated_at,
-    seoTitle: row.seo_title,
-    seoDescription: row.seo_description,
-    focusKeyword: row.focus_keyword,
-    excerpt: row.excerpt,
-    contentHtml: row.content_html,
-    featuredImage: row.featured_image,
-    readingTimeMinutes: row.reading_time_minutes,
-    categories,
-    tags,
-    toc: extractToc(row.content_html),
+    id: doc.id,
+    title: doc.title,
+    slug: doc.slug,
+    path: `/${doc.primaryCategorySlug}/${doc.slug}`,
+    primaryCategorySlug: doc.primaryCategorySlug,
+    status: "published",
+    publishedAt: doc.publishedAt,
+    updatedAt: doc.updatedAt,
+    seoTitle: doc.seoTitle,
+    seoDescription: doc.seoDescription,
+    focusKeyword: doc.focusKeyword,
+    excerpt: doc.excerpt,
+    contentHtml,
+    featuredImage: doc.featuredImage?.asset ? urlFor(doc.featuredImage).width(1600).url() : null,
+    readingTimeMinutes: readingTime(doc.body),
+    categories: dedupeCategories(doc.primaryCategory, doc.extraCategories),
+    tags: (doc.tags ?? []).filter((t): t is CategoryRef => Boolean(t)),
+    toc: extractToc(contentHtml),
   };
 }
 
-export function listPublishedPosts(): PostRecord[] {
-  const db = getDb();
-  const rows = db
-    .prepare(`SELECT * FROM posts WHERE status = 'published' ORDER BY published_at DESC`)
-    .all() as PostRow[];
-  return rows.map(toRecord);
+export async function listPublishedPosts(): Promise<PostRecord[]> {
+  const docs = await client.fetch<PostDoc[]>(
+    `*[_type == "post"] | order(publishedAt desc) { ${POST_FIELDS} }`,
+  );
+  return docs.map(toRecord);
 }
 
-export function getPostByPath(categorySlug: string, slug: string): PostRecord | null {
-  const db = getDb();
-  const row = db
-    .prepare(
-      `SELECT * FROM posts WHERE primary_category_slug = ? AND slug = ? AND status = 'published'`
-    )
-    .get(categorySlug, slug) as PostRow | undefined;
-  return row ? toRecord(row) : null;
+export async function getPostByPath(categorySlug: string, slug: string): Promise<PostRecord | null> {
+  const doc = await client.fetch<PostDoc | null>(
+    `*[_type == "post" && primaryCategory->slug.current == $categorySlug && slug.current == $slug][0] { ${POST_FIELDS} }`,
+    { categorySlug, slug },
+  );
+  return doc ? toRecord(doc) : null;
 }
 
-export function getAllCategoriesWithCounts() {
-  const db = getDb();
-  return db
-    .prepare(
-      `SELECT c.id, c.name, c.slug,
-              (SELECT COUNT(*) FROM post_categories pc
-               JOIN posts p ON p.id = pc.post_id
-               WHERE pc.category_id = c.id AND p.status = 'published') AS count
-       FROM categories c
-       ORDER BY c.name`
-    )
-    .all() as { id: number; name: string; slug: string; count: number }[];
+export async function getAllCategoriesWithCounts() {
+  return client.fetch<{ name: string; slug: string; count: number }[]>(
+    `*[_type == "category" && count(*[_type == "post" && references(^._id)]) > 0] | order(name asc) {
+      name, "slug": slug.current, "count": count(*[_type == "post" && references(^._id)])
+    }`,
+  );
 }
 
-export function searchPosts(query: string, categorySlug?: string): PostRecord[] {
-  const db = getDb();
-  const like = `%${query.toLowerCase()}%`;
-  let rows: PostRow[];
-  if (categorySlug) {
-    rows = db
-      .prepare(
-        `SELECT DISTINCT p.* FROM posts p
-         JOIN post_categories pc ON pc.post_id = p.id
-         JOIN categories c ON c.id = pc.category_id
-         WHERE p.status = 'published' AND c.slug = ?
-         AND (LOWER(p.title) LIKE ? OR LOWER(p.excerpt) LIKE ?)
-         ORDER BY p.published_at DESC`
-      )
-      .all(categorySlug, like, like) as PostRow[];
-  } else {
-    rows = db
-      .prepare(
-        `SELECT * FROM posts WHERE status = 'published'
-         AND (LOWER(title) LIKE ? OR LOWER(excerpt) LIKE ?)
-         ORDER BY published_at DESC`
-      )
-      .all(like, like) as PostRow[];
-  }
-  return rows.map(toRecord);
+export async function searchPosts(query: string, categorySlug?: string): Promise<PostRecord[]> {
+  const docs = await client.fetch<PostDoc[]>(
+    `*[_type == "post"
+      && ($q == "" || title match $wild || excerpt match $wild)
+      && ($cat == "" || primaryCategory->slug.current == $cat || $cat in categories[]->slug.current)
+    ] | order(publishedAt desc) { ${POST_FIELDS} }`,
+    { q: query, wild: `*${query}*`, cat: categorySlug ?? "" },
+  );
+  return docs.map(toRecord);
 }
 
-export function listPostsByCategory(categorySlug: string): PostRecord[] {
+export async function listPostsByCategory(categorySlug: string): Promise<PostRecord[]> {
   return searchPosts("", categorySlug);
 }
 
-export function getRelatedPosts(post: PostRecord, limit = 3): PostRecord[] {
-  const db = getDb();
-  const categoryIds = db
-    .prepare(`SELECT category_id FROM post_categories WHERE post_id = ?`)
-    .all(post.id) as { category_id: number }[];
-  const tagIds = db
-    .prepare(`SELECT tag_id FROM post_tags WHERE post_id = ?`)
-    .all(post.id) as { tag_id: number }[];
-
-  if (categoryIds.length === 0 && tagIds.length === 0) return [];
-
-  const catPlaceholders = categoryIds.map(() => "?").join(",") || "NULL";
-  const tagPlaceholders = tagIds.map(() => "?").join(",") || "NULL";
-
-  const rows = db
-    .prepare(
-      `SELECT p.*,
-        (SELECT COUNT(*) FROM post_categories pc WHERE pc.post_id = p.id AND pc.category_id IN (${catPlaceholders})) * 2 +
-        (SELECT COUNT(*) FROM post_tags pt WHERE pt.post_id = p.id AND pt.tag_id IN (${tagPlaceholders})) AS score
-       FROM posts p
-       WHERE p.status = 'published' AND p.id != ?
-       ORDER BY score DESC, p.published_at DESC
-       LIMIT ?`
-    )
-    .all(...categoryIds.map((c) => c.category_id), ...tagIds.map((t) => t.tag_id), post.id, limit) as (PostRow & {
-    score: number;
-  })[];
-
-  return rows.filter((r) => r.score > 0).map(toRecord);
+export async function getRelatedPosts(post: PostRecord, limit = 3): Promise<PostRecord[]> {
+  const catSlugs = post.categories.map((c) => c.slug);
+  const tagSlugs = post.tags.map((t) => t.slug);
+  if (catSlugs.length === 0 && tagSlugs.length === 0) return [];
+  const docs = await client.fetch<PostDoc[]>(
+    `*[_type == "post" && _id != $id]{
+      ${POST_FIELDS},
+      "score": count((categories[]->slug.current)[@ in $catSlugs]) * 2 + count((tags[]->slug.current)[@ in $tagSlugs])
+    }[score > 0] | order(score desc, publishedAt desc)[0...$limit]`,
+    { id: post.id, catSlugs, tagSlugs, limit },
+  );
+  return docs.map(toRecord);
 }
 
-export function getRecentPosts(limit = 5): PostRecord[] {
-  const db = getDb();
-  const rows = db
-    .prepare(`SELECT * FROM posts WHERE status = 'published' ORDER BY published_at DESC LIMIT ?`)
-    .all(limit) as PostRow[];
-  return rows.map(toRecord);
+export async function getRecentPosts(limit = 5): Promise<PostRecord[]> {
+  const docs = await client.fetch<PostDoc[]>(
+    `*[_type == "post"] | order(publishedAt desc)[0...$limit] { ${POST_FIELDS} }`,
+    { limit },
+  );
+  return docs.map(toRecord);
 }
 
-export function getMostReadPosts(days = 30, limit = 5): PostRecord[] {
-  const db = getDb();
-  const rows = db
-    .prepare(
-      `SELECT p.*, COUNT(v.id) AS views
-       FROM posts p
-       JOIN post_views v ON v.post_id = p.id
-       WHERE p.status = 'published' AND v.viewed_at >= datetime('now', ?)
-       GROUP BY p.id
-       ORDER BY views DESC
-       LIMIT ?`
-    )
-    .all(`-${days} days`, limit) as (PostRow & { views: number })[];
-
-  if (rows.length === 0) {
-    // cold start: no view data yet, fall back to most recent
-    return getRecentPosts(limit);
-  }
-  return rows.map(toRecord);
-}
-
-export function recordPostView(postId: number) {
-  const db = getDb();
-  db.prepare(`INSERT INTO post_views (post_id) VALUES (?)`).run(postId);
+// "Mais lidos" depende de analytics de visualização, que ainda não têm armazenamento
+// persistente (ver Fase 5 / banco em produção no README). Até lá, cai para os mais recentes.
+export async function getMostReadPosts(limit = 5): Promise<PostRecord[]> {
+  return getRecentPosts(limit);
 }
