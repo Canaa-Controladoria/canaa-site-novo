@@ -205,7 +205,7 @@ export function ValuationDcfDiagram() {
 
     function build() {
       const L = (Lc = layout(!!narrow));
-      stage.innerHTML = "";
+      stage!.innerHTML = "";
       svg = document.createElementNS(SVG_NS, "svg");
       setAttrs(svg, {
         viewBox: `0 0 ${L.W} ${L.H}`,
@@ -213,7 +213,7 @@ export function ValuationDcfDiagram() {
         "aria-label": `Valuation por fluxo de caixa descontado: valor do acionista R$ ${br(EQ)} milhões`,
       });
       svg.style.cssText = "width:100%;height:auto;display:block;overflow:visible";
-      stage.appendChild(svg);
+      stage!.appendChild(svg);
       const step = (L.c1 - L.c0) / 6;
       const cx = (i: number) => L.c0 + step * (i + 0.5);
 
@@ -399,7 +399,7 @@ export function ValuationDcfDiagram() {
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       createdButtons.forEach((b) => b.remove());
-      stage.innerHTML = "";
+      stage!.innerHTML = "";
     };
   }, []);
 
