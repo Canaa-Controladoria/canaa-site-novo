@@ -27,6 +27,42 @@ contato/proposta) mais um blog com painel de administração:
 - **Tiptap** para o editor de texto rico do painel admin
 - Sessão de admin via cookie assinado (JWT/`jose`), sem serviço externo
 
+## Blog no Sanity (migração em andamento)
+
+O blog está sendo migrado do SQLite + painel próprio para o **Sanity CMS** (hospedagem de
+conteúdo + CDN de imagens). O que já existe no repo:
+
+- **Studio embutido** em `/studio` (`src/app/studio/`), configurado em `sanity.config.ts`. O
+  cliente edita posts direto nessa rota, no mesmo domínio do site.
+- **Modelo de conteúdo** em `src/sanity/schemaTypes/` (`post`, `category`, `tag`, `short`).
+- **Cliente de leitura** em `src/sanity/client.ts` + helper de imagem em `src/sanity/image.ts`.
+- **Script de migração** `scripts/migrate-to-sanity.ts` (`npm run migrate:sanity`): lê
+  `content/data/posts.json`/`taxonomy.json`, converte o HTML do WordPress em Portable Text,
+  **sobe as imagens antigas do WordPress para o CDN do Sanity** e cria os documentos. É
+  idempotente (usa `_id` determinístico `post-<wpId>`/`category-<slug>`) — rodar de novo
+  atualiza em vez de duplicar, e o Sanity deduplica imagens por hash.
+
+Ainda **não** está wired: a leitura pública (`src/lib/blog.ts`) e o painel `/admin` continuam no
+SQLite até a migração ser validada. Formulários (leads/newsletter) e o ranking "mais lidos"
+continuarão precisando de um banco próprio — ver seção do banco em produção.
+
+### Entregar/popular na conta da Canaã
+
+O projeto Sanity usado no desenvolvimento está na conta pessoal do desenvolvedor. Quando a conta
+da Canaã existir, nada no código muda — tudo vem de variáveis de ambiente. Passos:
+
+1. Em https://sanity.io/manage, logado na conta da Canaã, **crie um projeto** e um dataset
+   `production`. (Alternativa: transferir o projeto de desenvolvimento para a organização da
+   Canaã, evitando repetir a migração.)
+2. Gere **dois tokens** (API → Tokens): um `Viewer` e um `Editor`.
+3. Preencha no `.env.local` (e nas env vars da Vercel): `NEXT_PUBLIC_SANITY_PROJECT_ID`,
+   `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_API_READ_TOKEN`, `SANITY_API_WRITE_TOKEN`
+   (ver `.env.example`).
+4. Em API → CORS origins, adicione `http://localhost:3000` e o domínio de produção (com
+   credentials).
+5. Rode `npm run migrate:sanity` **enquanto o WordPress antigo ainda estiver no ar** — o script
+   baixa as imagens de `canaacontroladoria.com.br` para subir ao Sanity.
+
 ## Rodando localmente
 
 ```bash
