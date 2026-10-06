@@ -231,7 +231,7 @@ export function GiroCharts() {
   }, []);
 
   return (
-    <section ref={rootRef} className="py-16">
+    <section ref={rootRef} className="pt-2 pb-16">
       <div className="mx-auto max-w-6xl px-6">
         <div ref={headRef} style={{ opacity: 0 }}>
           <SectionHeading

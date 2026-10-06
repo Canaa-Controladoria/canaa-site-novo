@@ -26,9 +26,12 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
   const content = solutionsContent[slug];
   if (!content) notFound();
 
+  const hasInlineIndicator =
+    content.slug === "gestao-por-squad" || content.slug === "gestao-para-giro" || content.slug === "report-estrategico";
+
   return (
     <>
-      <section className="mx-auto max-w-6xl px-6 pt-14 pb-16">
+      <section className={`mx-auto max-w-6xl px-6 pt-14 ${hasInlineIndicator ? "pb-6" : "pb-16"}`}>
         <div className="max-w-3xl">
           <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-navy-800 text-blue-mist-light">
             <SolutionIcon slug={content.slug} />
@@ -38,24 +41,20 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
           )}
           <h1 className="font-display text-4xl leading-tight text-navy-800">{content.heroTitle}</h1>
           <p className="mt-5 text-lg leading-relaxed text-navy-600">{content.heroLede}</p>
-          <div className="mt-8">
-            <CTAButton href="#proposta">Solicite uma proposta</CTAButton>
-          </div>
+          {!hasInlineIndicator && (
+            <div className="mt-8">
+              <CTAButton href="#proposta">Solicite uma proposta</CTAButton>
+            </div>
+          )}
         </div>
+      </section>
 
-        {content.highlights && (
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
-            {content.highlights.map((h) => (
-              <div key={h.title} className="rounded-box border border-base-300 bg-base-200 p-6">
-                <h2 className="font-display text-lg text-navy-800">{h.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-navy-600">{h.body}</p>
-              </div>
-            ))}
-          </div>
-        )}
+      {content.slug === "gestao-por-squad" && <KpiGauges />}
+      {content.slug === "gestao-para-giro" && <GiroCharts />}
 
-        {content.slug === "report-estrategico" && (
-          <div className="mt-12 flex flex-col items-center gap-6">
+      {content.slug === "report-estrategico" && (
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <div className="flex flex-col items-center gap-6">
             <video
               src="/videos/bi-mockup-lap.mp4"
               autoPlay
@@ -72,11 +71,21 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
               className="w-full max-w-xl"
             />
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
-      {content.slug === "gestao-por-squad" && <KpiGauges />}
-      {content.slug === "gestao-para-giro" && <GiroCharts />}
+      {content.highlights && (
+        <section className="mx-auto max-w-6xl px-6 pb-16">
+          <div className="grid gap-5 sm:grid-cols-2">
+            {content.highlights.map((h) => (
+              <div key={h.title} className="rounded-box border border-base-300 bg-base-200 p-6">
+                <h2 className="font-display text-lg text-navy-800">{h.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-navy-600">{h.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="bg-base-200 py-16">
         <div className="mx-auto max-w-6xl px-6">
