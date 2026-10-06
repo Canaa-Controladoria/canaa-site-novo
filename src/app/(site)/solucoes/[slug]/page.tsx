@@ -6,6 +6,8 @@ import { GiroCharts } from "@/components/site/GiroCharts";
 import { KpiGauges } from "@/components/site/KpiGauges";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionIcon } from "@/components/site/SolutionIcon";
+import { XpaCicloSection } from "@/components/site/XpaCicloSection";
+import { XpaSection } from "@/components/site/XpaSection";
 import { ProposalForm } from "@/components/forms/ProposalForm";
 import { getSolutionSlugs, solutionsContent } from "@/lib/solutions-content";
 
@@ -27,7 +29,10 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
   if (!content) notFound();
 
   const hasInlineIndicator =
-    content.slug === "gestao-por-squad" || content.slug === "gestao-para-giro" || content.slug === "report-estrategico";
+    content.slug === "gestao-por-squad" ||
+    content.slug === "gestao-para-giro" ||
+    content.slug === "report-estrategico" ||
+    content.slug === "gestao-de-futuro";
 
   return (
     <>
@@ -51,6 +56,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
 
       {content.slug === "gestao-por-squad" && <KpiGauges />}
       {content.slug === "gestao-para-giro" && <GiroCharts />}
+      {content.slug === "gestao-de-futuro" && <XpaCicloSection />}
 
       {content.slug === "report-estrategico" && (
         <section className="mx-auto max-w-6xl px-6 pb-16">
@@ -86,6 +92,8 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
           </div>
         </section>
       )}
+
+      {content.slug === "gestao-de-futuro" && <XpaSection />}
 
       <section className="bg-base-200 py-16">
         <div className="mx-auto max-w-6xl px-6">
