@@ -3,8 +3,8 @@ import { SectionHeading } from "@/components/site/SectionHeading";
 import { PostCard } from "@/components/blog/PostCard";
 import { getRecentPosts } from "@/lib/blog";
 
-export function ThankYouContent({ message }: { message: string }) {
-  const posts = getRecentPosts(3);
+export async function ThankYouContent({ message }: { message: string }) {
+  const posts = await getRecentPosts(3);
 
   return (
     <section className="mx-auto max-w-5xl px-6 py-16 text-center">

@@ -17,7 +17,7 @@ export default async function BlogPage({
   searchParams: Promise<{ q?: string; categoria?: string }>;
 }) {
   const { q, categoria } = await searchParams;
-  const posts = q || categoria ? searchPosts(q ?? "", categoria) : listPublishedPosts();
+  const posts = q || categoria ? await searchPosts(q ?? "", categoria) : await listPublishedPosts();
 
   return (
     <>

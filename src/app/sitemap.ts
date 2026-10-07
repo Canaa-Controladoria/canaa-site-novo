@@ -16,8 +16,8 @@ const staticPaths = [
   "politica-de-privacidade-2",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = listPublishedPosts();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await listPublishedPosts();
 
   return [
     ...staticPaths.map((p) => ({ url: `${site.url}/${p}`, lastModified: new Date() })),

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostCard } from "@/components/blog/PostCard";
 import { PostSidebar } from "@/components/blog/PostSidebar";
-import { PostViewTracker } from "@/components/blog/PostViewTracker";
 import { getPostByPath, getRelatedPosts } from "@/lib/blog";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ category: string; post: string }>;
 }): Promise<Metadata> {
   const { category, post: postSlug } = await params;
-  const post = getPostByPath(decodeURIComponent(category), decodeURIComponent(postSlug));
+  const post = await getPostByPath(decodeURIComponent(category), decodeURIComponent(postSlug));
   if (!post) return {};
   return {
     title: post.seoTitle ?? post.title,
@@ -34,15 +33,13 @@ export default async function BlogPostPage({
   params: Promise<{ category: string; post: string }>;
 }) {
   const { category, post: postSlug } = await params;
-  const post = getPostByPath(decodeURIComponent(category), decodeURIComponent(postSlug));
+  const post = await getPostByPath(decodeURIComponent(category), decodeURIComponent(postSlug));
   if (!post) notFound();
 
-  const related = getRelatedPosts(post, 3);
+  const related = await getRelatedPosts(post, 3);
 
   return (
     <article className="mx-auto max-w-6xl px-6 py-14">
-      <PostViewTracker postId={post.id} />
-
       <div className="mx-auto max-w-3xl text-center">
         {post.categories[0] && (
           <Link

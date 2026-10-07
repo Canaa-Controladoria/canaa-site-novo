@@ -1,40 +1,21 @@
 import "server-only";
-import { getDb } from "./db";
-
-export type ShortStatus = "draft" | "published";
+import { client } from "@/sanity/client";
 
 export interface ShortRecord {
-  id: number;
+  id: string;
   title: string;
   videoPath: string;
   thumbnailPath: string | null;
 }
 
-interface ShortRow {
-  id: number;
-  title: string;
-  video_path: string;
-  thumbnail_path: string | null;
-}
-
-function toRecord(row: ShortRow): ShortRecord {
-  return {
-    id: row.id,
-    title: row.title,
-    videoPath: row.video_path,
-    thumbnailPath: row.thumbnail_path,
-  };
-}
-
-export function listPublishedShorts(limit?: number): ShortRecord[] {
-  const db = getDb();
-  const rows = db
-    .prepare(
-      `SELECT id, title, video_path, thumbnail_path FROM shorts
-       WHERE status = 'published'
-       ORDER BY position ASC, published_at DESC
-       ${limit ? "LIMIT ?" : ""}`
-    )
-    .all(...(limit ? [limit] : [])) as ShortRow[];
-  return rows.map(toRecord);
+export async function listPublishedShorts(limit?: number): Promise<ShortRecord[]> {
+  const shorts = await client.fetch<ShortRecord[]>(
+    `*[_type == "short" && defined(video.asset)] | order(position asc, publishedAt desc) {
+      "id": _id,
+      title,
+      "videoPath": video.asset->url,
+      "thumbnailPath": thumbnail.asset->url
+    }`,
+  );
+  return limit ? shorts.slice(0, limit) : shorts;
 }

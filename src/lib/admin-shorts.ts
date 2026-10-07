@@ -1,6 +1,7 @@
 import "server-only";
 import { getDb } from "./db";
-import type { ShortStatus } from "./shorts";
+
+export type ShortStatus = "draft" | "published";
 
 export interface AdminShortInput {
   title: string;

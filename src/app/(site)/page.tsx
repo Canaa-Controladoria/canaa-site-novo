@@ -74,8 +74,8 @@ const controllerSteps = [
 const clientLogos = Array.from({ length: 32 }, (_, i) => `logo${i + 1}`);
 
 export default async function HomePage() {
-  const recentPosts = getRecentPosts(3);
-  const shorts = listPublishedShorts(8);
+  const recentPosts = await getRecentPosts(3);
+  const shorts = await listPublishedShorts(8);
 
   return (
     <>

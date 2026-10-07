@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getAllCategoriesWithCounts, getMostReadPosts } from "@/lib/blog";
 
-export function BlogSidebar({ activeCategory }: { activeCategory?: string }) {
-  const categories = getAllCategoriesWithCounts();
-  const mostRead = getMostReadPosts(30, 5);
+export async function BlogSidebar({ activeCategory }: { activeCategory?: string }) {
+  const categories = await getAllCategoriesWithCounts();
+  const mostRead = await getMostReadPosts(5);
 
   return (
     <aside className="space-y-10">

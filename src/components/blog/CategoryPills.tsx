@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getAllCategoriesWithCounts } from "@/lib/blog";
 
-export function CategoryPills({ active, query }: { active?: string; query?: string }) {
-  const categories = getAllCategoriesWithCounts();
+export async function CategoryPills({ active, query }: { active?: string; query?: string }) {
+  const categories = await getAllCategoriesWithCounts();
   const qs = (categorySlug?: string) => {
     const params = new URLSearchParams();
     if (query) params.set("q", query);
