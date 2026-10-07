@@ -689,10 +689,11 @@ export function CuboResultadoDiagram() {
           f.p = clamp((now - f.pStart) / COUNT);
           draw(f, f.p);
         }
-        if (now - tStart > TRANS + HOLD / SPEED && now - lastTouch > 2500) go((cur + 1) % faces.length, now);
+        if (now - tStart > TRANS + HOLD / SPEED && now - lastTouch > 3500) go((cur + 1) % faces.length, now);
         pivot.position.y = Math.sin((now / 1000) * 0.8) * 0.025;
-        if (now - lastTouch > 3000) {
-          cam.position.lerp(HOME, 0.035);
+        if (now - lastTouch > 3500) {
+          cam.position.lerp(HOME, 0.03);
+          cam.position.setLength(HOME.length());
           setManual(false);
         }
         controls.update();
@@ -707,7 +708,7 @@ export function CuboResultadoDiagram() {
             if (visible) {
               if (!started) {
                 started = true;
-                stage!.style.opacity = "1";
+                root!.style.opacity = "1";
                 go(0, performance.now());
               }
               if (!raf) raf = requestAnimationFrame(tick);
@@ -735,9 +736,9 @@ export function CuboResultadoDiagram() {
   }, []);
 
   return (
-    <div ref={rootRef} className="flex w-full flex-col items-center gap-3">
-      <div ref={stageRef} className="aspect-square w-full max-w-[420px]" style={{ opacity: 0, transition: "opacity .8s ease" }} />
-      <div ref={tabsRef} className="flex max-w-[480px] flex-wrap justify-center gap-2" />
+    <div ref={rootRef} className="flex w-full flex-col items-center gap-3" style={{ opacity: 0, transition: "opacity .8s ease" }}>
+      <div ref={stageRef} className="aspect-square w-full max-w-[420px]" />
+      <div ref={tabsRef} className="flex min-h-[90px] max-w-[480px] flex-wrap content-start justify-center gap-2" />
       <div className="flex min-h-[20px] items-center justify-center text-center">
         <span ref={hintDefaultRef} className="text-xs text-navy-400">
           Clique e arraste o cubo para girar e explorar à vontade
