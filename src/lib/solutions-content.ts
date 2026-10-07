@@ -195,9 +195,9 @@ export const solutionsContent: Record<string, SolutionContent> = {
 
   "gestao-de-futuro": {
     slug: "gestao-de-futuro",
-    navTitle: "Gestão de Futuro",
+    navTitle: "Gestão de Futuro & XP&A",
     eyebrow: "Orçamento alinhado à estratégia dos gestores",
-    heroTitle: "Gestão de Futuro: planejamento orçamentário estratégico para decisões assertivas",
+    heroTitle: "Gestão de Futuro & XP&A: planejamento orçamentário estratégico para decisões assertivas",
     heroLede:
       "Com base em um planejamento orçamentário bem estruturado, a Canaã auxilia na tomada de decisões financeiras mais conscientes. Utilizamos a metodologia Bottom-Up Canaã, orçamento base zero e metodologias de risco para projetar cenários — com participação ativa da sua equipe.",
     highlights: [
@@ -216,10 +216,10 @@ export const solutionsContent: Record<string, SolutionContent> = {
       { title: "Cenários estratégicos", body: "Criação de diferentes cenários futuros para preparar a empresa diante de incertezas." },
       { title: "Projeção Monte Carlo", body: "Simulação estatística com a ferramenta Crystal Ball da Oracle para avaliar riscos e incertezas." },
     ],
-    proposalHeading: "Solicite uma proposta de Gestão de Futuro",
-    seoTitle: "Gestão de Futuro e Planejamento Orçamentário Estratégico",
+    proposalHeading: "Solicite uma proposta de Gestão de Futuro & XP&A",
+    seoTitle: "Gestão de Futuro & XP&A: Planejamento Orçamentário Estratégico",
     seoDescription:
-      "Não basta gerir bem o presente; é essencial planejar o amanhã. A Canaã oferece Gestão de Futuro com planejamento orçamentário estratégico.",
+      "Não basta gerir bem o presente; é essencial planejar o amanhã. A Canaã oferece Gestão de Futuro e XP&A, com planejamento orçamentário estratégico e integrado.",
   },
 
   valuation: {

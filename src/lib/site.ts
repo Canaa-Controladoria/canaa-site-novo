@@ -36,7 +36,7 @@ export const solutions = [
   { slug: "cubo-de-resultado", title: "Cubo de Resultado", short: "Margem de contribuição" },
   { slug: "gestao-por-squad", title: "Gestão por OKR e KPIs", short: "Metas e indicadores" },
   { slug: "gestao-para-giro", title: "Gestão para Giro", short: "Capital de giro" },
-  { slug: "gestao-de-futuro", title: "Gestão de Futuro", short: "Orçamento e projeções" },
+  { slug: "gestao-de-futuro", title: "Gestão de Futuro & XP&A", short: "Orçamento, projeções e XP&A" },
   { slug: "valuation", title: "Valuation", short: "Quanto vale sua empresa" },
   { slug: "estrutura-de-controladoria", title: "Estrutura de Controladoria", short: "Equipe e processos" },
   { slug: "training", title: "Training", short: "Desenvolvimento de equipes" },
