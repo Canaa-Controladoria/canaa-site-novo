@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
-import { SectionHeading } from "@/components/site/SectionHeading";
 import type { KpiGaugeItem } from "@/types/kpi-gauge";
 
 const DEFAULT_ITEMS: KpiGaugeItem[] = [
@@ -183,11 +182,7 @@ export function KpiGauges({
   return (
     <section ref={rootRef} className="pt-2 pb-16">
       <div className="mx-auto max-w-6xl px-6">
-        <div ref={headRef} style={{ opacity: 0 }}>
-          <SectionHeading eyebrow={eyebrow} title={title} lede={lede} />
-        </div>
-
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {computed.map((item, i) => {
             const statusColors = STATUS_COLOR[item.status];
             return (
@@ -293,6 +288,12 @@ export function KpiGauges({
               </div>
             );
           })}
+        </div>
+
+        <div ref={headRef} style={{ opacity: 0 }} className="mt-8 max-w-2xl">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-2">{eyebrow}</p>
+          <h2 className="font-display text-xl text-navy-800">{title}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-navy-600">{lede}</p>
         </div>
       </div>
     </section>
