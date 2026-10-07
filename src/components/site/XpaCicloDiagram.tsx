@@ -105,6 +105,7 @@ const T_IDLE = T_NODE + STEP * (AREAS.length - 1) + 0.9;
 
 export function XpaCicloDiagram() {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const captionRef = useRef<HTMLParagraphElement | null>(null);
   const diskRef = useRef<SVGGElement | null>(null);
   const centerRef = useRef<SVGGElement | null>(null);
   const wordRefs = useRef<(SVGTextElement | null)[]>([]);
@@ -151,6 +152,10 @@ export function XpaCicloDiagram() {
       dotRef.current?.setAttribute("cx", f(dp[0]));
       dotRef.current?.setAttribute("cy", f(dp[1]));
       dotRef.current?.setAttribute("opacity", String(dOn));
+      if (captionRef.current) {
+        captionRef.current.style.opacity = String(dOn);
+        captionRef.current.style.transform = `translateY(${(1 - dOn) * 8}px)`;
+      }
 
       nodeRefs.current.forEach((n, i) => {
         const st = T_NODE + i * STEP;
@@ -357,6 +362,9 @@ export function XpaCicloDiagram() {
           </text>
         </g>
       </svg>
+      <p ref={captionRef} style={{ opacity: 0 }} className="mt-3 text-center text-sm text-navy-600">
+        As Finanças no centro, conectadas a toda a empresa.
+      </p>
     </div>
   );
 }
