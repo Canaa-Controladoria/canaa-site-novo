@@ -17,17 +17,19 @@ export const metadata: Metadata = {
 const media = [
   {
     videoId: "Hs-AsAdHHoo",
+    si: "KZ2j9Or9QeZHImaz",
     podcast: "[Nome do podcast 1]",
     topic: "[Tema do episódio 1]",
     date: "[data]",
   },
   {
     videoId: "QjSqJtOgCbw",
+    si: "Z4k6HdzkJJAjRaVv",
     podcast: "[Nome do podcast 2]",
     topic: "[Tema do episódio 2]",
     date: "[data]",
   },
-].map((m) => ({ ...m, href: `https://www.youtube.com/watch?v=${m.videoId}` }));
+];
 
 const values = [
   {
@@ -216,38 +218,26 @@ export default function QuemSomosPage() {
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {media.map((m) => (
-              <a
-                key={m.href}
-                href={m.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col overflow-hidden rounded-box border border-base-300 bg-base-100 text-navy-800 transition-colors hover:border-accent"
+              <div
+                key={m.videoId}
+                className="flex flex-col overflow-hidden rounded-box border border-base-300 bg-base-100 text-navy-800"
               >
-                <div className="relative flex h-56 items-center justify-center bg-navy-900">
-                  <Image
-                    src={`https://i.ytimg.com/vi/${m.videoId}/hqdefault.jpg`}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover"
+                <div className="relative aspect-video w-full bg-navy-900">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${m.videoId}?si=${m.si}`}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
                   />
-                  <div className="absolute inset-0 bg-navy-900/45" />
-                  <span className="absolute left-5 top-5 rounded-full bg-white/15 px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-white">
-                    Podcast · YouTube
-                  </span>
-                  <span className="relative flex h-[76px] w-[76px] items-center justify-center rounded-full bg-white transition-transform group-hover:scale-105">
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="#004b84">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </span>
                 </div>
                 <div className="flex flex-col gap-2 p-7">
                   <span className="text-sm font-bold text-navy-900">{m.podcast}</span>
                   <strong className="text-xl leading-snug text-navy-900">{m.topic}</strong>
                   <span className="text-sm text-navy-600">Dra. Ana Luísa Amorim, convidada · {m.date}</span>
-                  <span className="mt-1.5 text-sm font-bold text-navy-900">Assistir ao episódio →</span>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
