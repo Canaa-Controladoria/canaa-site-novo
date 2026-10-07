@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { SectionHeading } from "@/components/site/SectionHeading";
 
 const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 const ENTRADAS = [420, 380, 450, 470, 430, 500, 520, 480, 510, 540, 560, 590];
@@ -233,15 +232,7 @@ export function GiroCharts() {
   return (
     <section ref={rootRef} className="pt-2 pb-16">
       <div className="mx-auto max-w-6xl px-6">
-        <div ref={headRef} style={{ opacity: 0 }}>
-          <SectionHeading
-            eyebrow="GESTÃO PARA GIRO"
-            title="Seu caixa, mês a mês, sob controle"
-            lede="Acompanhamos cada entrada e saída para antecipar desafios de liquidez e garantir fôlego para o crescimento sustentável."
-          />
-        </div>
-
-        <div className="mt-10 grid items-start gap-5 lg:grid-cols-2">
+        <div className="grid items-start gap-5 lg:grid-cols-2">
           <div
             ref={(el) => {
               cardRefs.current[0] = el;
@@ -457,6 +448,15 @@ export function GiroCharts() {
               </svg>
             </div>
           </div>
+        </div>
+
+        <div ref={headRef} style={{ opacity: 0 }} className="mt-8 max-w-2xl">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-2">GESTÃO PARA GIRO</p>
+          <h2 className="font-display text-xl text-navy-800">Seu caixa, mês a mês, sob controle</h2>
+          <p className="mt-2 text-sm leading-relaxed text-navy-600">
+            Acompanhamos cada entrada e saída para antecipar desafios de liquidez e garantir fôlego para o crescimento
+            sustentável.
+          </p>
         </div>
       </div>
     </section>
