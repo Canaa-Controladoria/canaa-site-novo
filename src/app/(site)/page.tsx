@@ -6,13 +6,12 @@ import { GrowBars } from "@/components/site/GrowBars";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SolutionCard } from "@/components/site/SolutionCard";
 import { TestimonialsGrid } from "@/components/site/TestimonialsGrid";
-import { Shorts } from "@/components/site/Shorts";
+import { InstagramReels } from "@/components/site/InstagramReels";
 import { Faq } from "@/components/site/Faq";
 import { PostCard } from "@/components/blog/PostCard";
 import { ProposalForm } from "@/components/forms/ProposalForm";
 import { solutions, site } from "@/lib/site";
 import { getRecentPosts } from "@/lib/blog";
-import { listPublishedShorts } from "@/lib/shorts";
 
 export const revalidate = 0;
 
@@ -75,7 +74,6 @@ const clientLogos = Array.from({ length: 32 }, (_, i) => `logo${i + 1}`);
 
 export default async function HomePage() {
   const recentPosts = await getRecentPosts(3);
-  const shorts = await listPublishedShorts(8);
 
   return (
     <>
@@ -337,26 +335,24 @@ export default async function HomePage() {
       </section>
 
       {/* Shorts */}
-      {shorts.length > 0 && (
-        <section id="shorts" className="mx-auto max-w-6xl px-6 py-20">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionHeading eyebrow="Shorts" title="Controladoria em 1 minuto" />
-            {site.social.youtube && (
-              <a
-                href={site.social.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-navy-700 px-6 py-3 text-sm font-bold text-navy-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy-700 hover:text-white hover:shadow-md"
-              >
-                Ver canal no YouTube →
-              </a>
-            )}
-          </div>
-          <div className="mt-10">
-            <Shorts shorts={shorts} />
-          </div>
-        </section>
-      )}
+      <section id="shorts" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHeading eyebrow="Shorts" title="Controladoria em 1 minuto" />
+          {site.social.instagram && (
+            <a
+              href={site.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg border border-navy-700 px-6 py-3 text-sm font-bold text-navy-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-navy-700 hover:text-white hover:shadow-md"
+            >
+              Ver no Instagram →
+            </a>
+          )}
+        </div>
+        <div className="mt-10">
+          <InstagramReels />
+        </div>
+      </section>
 
       {/* Insights */}
       {recentPosts.length > 0 && (
