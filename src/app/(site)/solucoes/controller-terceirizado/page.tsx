@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CTAButton } from "@/components/site/CTAButton";
+import { CountUp } from "@/components/site/CountUp";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ControllerFaq } from "@/components/site/ControllerFaq";
 import { ControllerLeadForm } from "@/components/forms/ControllerLeadForm";
@@ -60,28 +62,71 @@ const comparison = [
 export default function ControllerTerceirizadoPage() {
   return (
     <>
-      {/* Hero + formulário */}
-      <section id="diagnostico" className="mx-auto max-w-6xl px-6 pt-14 pb-16">
-        <p className="text-sm text-navy-500">
-          <Link href="/" className="hover:text-navy-800">
-            Início
-          </Link>{" "}
-          /{" "}
-          <Link href="/solucoes" className="hover:text-navy-800">
-            Soluções
-          </Link>{" "}
-          / <span className="font-semibold text-navy-800">Controller terceirizado</span>
-        </p>
-        <div className="mt-8 grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+      {/* Hero */}
+      <section className="hero relative overflow-hidden bg-navy-925 text-white">
+        <div className="relative mx-auto max-w-6xl px-6 pt-14 pb-16 sm:pt-16 sm:pb-20">
+          <p className="text-sm text-blue-mist">
+            <Link href="/" className="hover:text-white">
+              Início
+            </Link>{" "}
+            /{" "}
+            <Link href="/solucoes" className="hover:text-white">
+              Soluções
+            </Link>{" "}
+            / <span className="font-semibold text-white">Controller terceirizado</span>
+          </p>
+          <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-blue-mist">Controladoria outsourcing</p>
+          <h1 className="font-display mt-4 max-w-4xl text-4xl font-light leading-[1.1] sm:text-5xl">
+            Aqui sua empresa recebe uma{" "}
+            <strong className="font-extrabold">equipe de controladoria inteira</strong>
+          </h1>
+          <p className="mt-5 max-w-4xl text-lg leading-relaxed text-blue-mist-light">
+            Em vez de depender de um único profissional sobrecarregado ou de relatórios que chegam tarde demais, sua
+            empresa passa a contar com uma estrutura completa de controladoria: especialistas em finanças, custos,
+            indicadores e planejamento trabalhando juntos para transformar seu resultado. É o mesmo nível de
+            controle que grandes empresas têm internamente, sem o custo de montar e manter esse time dentro de
+            casa. Você ganha clareza sobre para onde vai cada real, enxerga riscos antes que virem problemas e
+            passa a decidir com segurança, com base em dados confiáveis, e conta com uma equipe para trabalhar
+            junto com sua equipe melhorando resultados.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-10 border-t border-white/15 pt-7">
+            <div>
+              <span className="mb-2.5 block h-[3px] w-7 rounded-sm bg-gradient-to-r from-accent to-ember-600" />
+              <p className="font-display text-2xl font-extrabold tabular-nums">
+                <CountUp end={10} prefix="+" suffix=" anos" />
+              </p>
+              <p className="mt-1 text-sm text-blue-mist">em controladoria outsourcing</p>
+            </div>
+            <div>
+              <span className="mb-2.5 block h-[3px] w-7 rounded-sm bg-gradient-to-r from-accent to-ember-600" />
+              <p className="font-display text-2xl font-extrabold tabular-nums">
+                <CountUp end={94} suffix="%" />
+              </p>
+              <p className="mt-1 text-sm text-blue-mist">de satisfação dos clientes</p>
+            </div>
+            <div>
+              <span className="mb-2.5 block h-[3px] w-7 rounded-sm bg-gradient-to-r from-accent to-ember-600" />
+              <p className="font-display text-2xl font-extrabold tabular-nums">
+                <CountUp end={91} suffix="%" />
+              </p>
+              <p className="mt-1 text-sm text-blue-mist">relatam mais controle e crescimento</p>
+            </div>
+          </div>
+          <div className="mt-9">
+            <CTAButton href="#diagnostico">Agendar diagnóstico</CTAButton>
+          </div>
+        </div>
+      </section>
+
+      {/* Diagnóstico + formulário */}
+      <section id="diagnostico" className="mx-auto max-w-6xl px-6 py-20">
+        <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="flex flex-col gap-6">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember-600">Controladoria outsourcing</p>
-            <h1 className="font-display text-4xl leading-tight text-navy-800 sm:text-5xl">
-              Controller terceirizado para médias empresas
-            </h1>
-            <p className="max-w-xl text-lg leading-relaxed text-navy-600">
-              Uma equipe Canaã dedicada à controladoria da sua empresa: Finanças, Contabilidade e Operação conectadas
-              em uma rotina de dados, relatórios e reuniões de resultado.
-            </p>
+            <SectionHeading
+              eyebrow="Diagnóstico"
+              title="Como começamos com sua empresa"
+              lede="Um especialista da Canaã mapeia seu momento atual e retorna em até 1 dia útil com os próximos passos."
+            />
             <ul className="flex flex-col gap-3 text-base text-navy-800">
               {[
                 "Diagnóstico de FP&A e controladoria no início",
