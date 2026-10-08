@@ -596,6 +596,14 @@ export function CuboResultadoDiagram() {
       if (cancelled) return;
       const cube = gltf.scene;
       cube.position.y = -0.5;
+      cube.traverse((obj) => {
+        const mesh = obj as THREE.Mesh;
+        if (!mesh.isMesh) return;
+        const mat = mesh.material as THREE.MeshStandardMaterial;
+        if (mat?.name === "casco_azul_canaa") {
+          mat.color.set("#ffffff");
+        }
+      });
       holder.add(cube);
 
       const faces: RuntimeFace[] = FACES.map((f) => {
