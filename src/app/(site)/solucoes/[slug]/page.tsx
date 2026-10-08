@@ -124,9 +124,9 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
           <SectionHeading title={content.topicsHeading} />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {content.topics.map((t) => (
-              <div key={t.title} className="rounded-box bg-base-100 border border-base-300 p-6">
-                <h3 className="font-mono text-sm font-semibold uppercase tracking-wide text-navy-800">{t.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-navy-600">{t.body}</p>
+              <div key={t.title} className="flex flex-col gap-2.5 rounded-box border border-base-300 bg-base-100 p-7">
+                <strong className="text-lg text-navy-900">{t.title}</strong>
+                <p className="text-sm leading-relaxed text-navy-600">{t.body}</p>
               </div>
             ))}
           </div>
