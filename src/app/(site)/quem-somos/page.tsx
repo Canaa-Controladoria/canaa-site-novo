@@ -18,16 +18,16 @@ const media = [
   {
     videoId: "Hs-AsAdHHoo",
     si: "KZ2j9Or9QeZHImaz",
-    podcast: "[Nome do podcast 1]",
-    topic: "[Tema do episódio 1]",
-    date: "[data]",
+    podcast: "Podcast #+Q1 · Prof. Fabiano Caxito",
+    topic: "Episódio #64: Ana Luísa Amorim e a Controladoria",
+    date: "2025",
   },
   {
     videoId: "QjSqJtOgCbw",
     si: "Z4k6HdzkJJAjRaVv",
-    podcast: "[Nome do podcast 2]",
-    topic: "[Tema do episódio 2]",
-    date: "[data]",
+    podcast: "Podcast Facioli · Facioli Consultoria",
+    topic: "Planejar é enxergar antes: o papel da controladoria na estratégia empresarial",
+    date: "2025",
   },
 ];
 
